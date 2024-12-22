@@ -50,7 +50,7 @@ public class RndColorsControl : MonoBehaviour
                         x = Mathf.RoundToInt(oldPos.x + 1.5f);
                         y = Mathf.RoundToInt(oldPos.z + 1.5f);
                         print($"pos => {ball.transform.position}  x={x} y={y}");
-                        lc.TranslateColor(arCols[arNumCols[4 * y + x]]);
+                        lc.TranslateColor(arCols[arNumCols[4 * y + x]], arNumCols[4 * y + x]);
                         isRnd = false;
                     }
                 }
