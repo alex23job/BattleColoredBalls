@@ -96,7 +96,7 @@ public class LevelControl : MonoBehaviour
         if (modeSteps == 0 || modeSteps == 2) { currentCol1 = numCol; ui_Control.ViewCross(modeSteps, false); }
         if (modeSteps == 1 || modeSteps == 3) { currentCol2 = numCol; ui_Control.ViewCross(modeSteps, false); }
         ui_Control.ViewBalls(modeSteps++, col);
-        modeSteps %= 2;
+        modeSteps %= 4;
         if ((modeSteps % 2) > 0) GetNextStep();
         else Invoke("DeactiveRndColors", 1f);
     }
@@ -169,8 +169,10 @@ public class LevelControl : MonoBehaviour
                     SwapTile(selectNum, num);
                     selectTail = null;
                     if (currentCol1 == -1 && currentCol2 == -1)
-                    {   //  ход игрока сделан - теперь ход БОТа
+                    {   //  ход игрока сделан - теперь ход БОТа, но нужно проверить и удалить 3 и более одноцветных плиток
 
+
+                        GetNextStep();
                     }
                 }
                 else
