@@ -13,6 +13,8 @@ public class UI_control : MonoBehaviour
     [SerializeField] private Image crossPlayerRight;
     [SerializeField] private Image crossBotLeft;
     [SerializeField] private Image crossBotRight;
+    [SerializeField] private Image playerHP;
+    [SerializeField] private Image botHP;
 
 
     // Start is called before the first frame update
@@ -62,6 +64,24 @@ public class UI_control : MonoBehaviour
             case 3:
                 crossBotRight.gameObject.SetActive(zn);
                 break;
+        }
+    }
+
+    /// <summary>
+    /// Отображение здоровья игрока или бота
+    /// </summary>
+    /// <param name="hp">Текущее значение здоровья</param>
+    /// <param name="maxHP">Ьаксимальное значение здоровья</param>
+    /// <param name="mode">Для кого отображаем : 1 - player, 2 - bot</param>
+    public void ViewHp(int hp, int maxHP, int mode)
+    {
+        if (mode == 1)  //  player
+        {
+            playerHP.fillAmount = (float)hp / (float)maxHP;
+        }
+        if (mode == 2)  //  bot
+        {
+            botHP.fillAmount = (float)hp / (float)maxHP;
         }
     }
 }
