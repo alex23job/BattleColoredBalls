@@ -15,7 +15,8 @@ public class UI_control : MonoBehaviour
     [SerializeField] private Image crossBotRight;
     [SerializeField] private Image playerHP;
     [SerializeField] private Image botHP;
-
+    [SerializeField] private Text txtPlName;
+    [SerializeField] private Text txtBotName;
 
     // Start is called before the first frame update
     void Start()
@@ -82,6 +83,23 @@ public class UI_control : MonoBehaviour
         if (mode == 2)  //  bot
         {
             botHP.fillAmount = (float)hp / (float)maxHP;
+        }
+    }
+
+    /// <summary>
+    /// Отображение имени игрока или бота
+    /// </summary>
+    /// <param name="nm">строка с именем</param>
+    /// <param name="mode">Для кого отображаем : 1 - player, 2 - bot</param>
+    public void ViewName(string nm, int mode)
+    {
+        if (mode == 1)  //  player
+        {
+            txtPlName.text = nm;
+        }
+        if (mode == 2)  //  bot
+        {
+            txtBotName.text = nm;
         }
     }
 }
