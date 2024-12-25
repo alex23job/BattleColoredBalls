@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class LevelControl : MonoBehaviour
@@ -165,12 +166,26 @@ public class LevelControl : MonoBehaviour
                     tg1.y = 0;
                     selectTail.GetComponent<TailControl>().SetTarget(tg1);
                     if (pole64[selectNum] == currentCol1) { currentCol1 = -1; ui_Control.ViewCross(0, true); }
-                    if (pole64[selectNum] == currentCol2) { currentCol2 = -1; ui_Control.ViewCross(1, true); }
+                    else if (pole64[selectNum] == currentCol2) { currentCol2 = -1; ui_Control.ViewCross(1, true); }
                     SwapTile(selectNum, num);
                     selectTail = null;
-                    if (currentCol1 == -1 && currentCol2 == -1)
-                    {   //  ход игрока сделан - теперь ход БОТа, но нужно проверить и удалить 3 и более одноцветных плиток
 
+                    #region нужно проверить и удалить 3 и более одноцветных плиток
+                    List<int> ar = TestTiles3(selectNum);
+                    if (ar.Count > 0)
+                    {
+                        DelTiles(ar);
+                    }
+                    ar = TestTiles3(num);
+                    if (ar.Count > 0)
+                    {
+                        DelTiles(ar);
+                    }
+                    DownTiles();
+                    #endregion
+
+                    if (currentCol1 == -1 && currentCol2 == -1)
+                    {   //  ход игрока сделан - теперь ход БОТа
 
                         GetNextStep();
                     }
@@ -189,6 +204,140 @@ public class LevelControl : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    private List<int> TestTiles3(int num)
+    {
+        List<int> ar = new List<int>();
+        int x = num % 8, y = num / 8, nc = pole64[num];
+        print($"TestTiles3 num={num} x={x} y={y} col={nc}");
+        if (nc == -1) return ar;
+        if ((x > 0) && (pole64[num - 1] == nc))
+        {   //  слева одноцвет
+            if ((x > 1) && (pole64[num - 2] == nc))
+            {   //  слева два
+                ar.Add(num);ar.Add(num - 1);ar.Add(num - 2);
+                if ((x < 7) && (pole64[num + 1] == nc))
+                {
+                    ar.Add(num + 1);
+                    if ((x < 6) && (pole64[num + 2] == nc))
+                    {
+                        ar.Add(num + 2);
+                        //if ((y > 0) && (pole64[num + 2 - 8] == nc)) ar.Add(num - 6);
+                        //if ((y < 7) && (pole64[num + 2 + 8] == nc)) ar.Add(num + 10);
+                    }
+                    if ((y > 0) && (pole64[num + 1 - 8] == nc)) ar.Add(num - 7);
+                    if ((y < 7) && (pole64[num + 1 + 8] == nc)) ar.Add(num + 9);
+                }
+            }
+            if ((y > 0) && (pole64[num - 1 - 8] == nc))
+            {   //  слева и слева вниз 
+                ar.Add(num); ar.Add(num - 1); ar.Add(num - 9);
+                if ((y < 7) && (pole64[num + 8] == nc))
+                {   //  и ещё вверх
+                    ar.Add(num + 8);
+                    if ((y < 6) && (pole64[num + 16] == nc)) ar.Add(num + 16);  //  и 2 вверх 
+                }
+            }
+            if ((y < 7) && (pole64[num - 1 + 8] == nc))
+            {   //  слева и слева вверх 
+                ar.Add(num); ar.Add(num - 1); ar.Add(num + 7);
+                if ((y > 0) && (pole64[num - 8] == nc))
+                {   //  и ещё вниз
+                    ar.Add(num - 8);
+                    if ((y > 1) && (pole64[num - 16] == nc)) ar.Add(num - 16);  //  и 2 вниз 
+                }
+            }
+        }
+        if ((x < 7) && (pole64[num + 1] == nc))
+        {
+            print("два вправо");
+            if ((x < 6) && (pole64[num + 2] == nc))
+            {
+                print("три вправо");
+                ar.Add(num); ar.Add(num + 1); ar.Add(num + 2);
+                if ((x > 0) && (pole64[num - 1] == nc)) ar.Add(num - 1);    // 1 слева и 2 справа
+            }
+            if ((x > 0) && (pole64[num - 1] == nc))
+            {
+                print("слева справа");
+                ar.Add(num); ar.Add(num + 1); ar.Add(num - 1);
+                if ((x > 1) && (pole64[num - 2] == nc)) ar.Add(num - 2);    // 2 слева и 1 справа
+            }
+        }
+        if ((y > 0) && (pole64[num - 8] == nc))
+        {
+            print("два по вертикали вниз");
+            if ((y > 1) && (pole64[num - 16] == nc))
+            {
+                print("три по вертикали вниз");
+                ar.Add(num); ar.Add(num - 8); ar.Add(num - 16);
+            }
+            if ((y < 7) && (pole64[num + 8] == nc))
+            {
+                print("вверх вниз");
+                ar.Add(num); ar.Add(num + 8); ar.Add(num - 8);
+                if ((y < 6) && (pole64[num + 16] == nc)) ar.Add(num + 16);    // 1 вниз и 2 вверх
+            }
+        }
+        if ((y < 7) && (pole64[num + 8] == nc))
+        {
+            print("два по вертикали вверх");
+            if ((y < 6) && (pole64[num + 16] == nc))
+            {
+                print("три по вертикали вверх");
+                ar.Add(num); ar.Add(num + 8); ar.Add(num + 16);
+            }
+            if ((y > 0) && (pole64[num - 8] == nc))
+            {
+                print("вверх вниз");
+                ar.Add(num); ar.Add(num + 8); ar.Add(num - 8);
+                if ((y > 1) && (pole64[num - 16] == nc)) ar.Add(num - 16);    // 2 вниз и 1 вверх
+            }
+        }
+        return ar;
+    }
+
+    private void DelTiles(List<int> ar)
+    {
+        int i;
+        StringBuilder sb = new StringBuilder();
+        for(i = 0; i < ar.Count; i++)
+        {
+            sb.Append($"{ar[i]} ");
+            pole64[ar[i]] = -1;
+            if (poleGO[ar[i]] != null) poleGO[ar[i]].GetComponent<TailControl>().DeletingTail();
+            poleGO[ar[i]] = null;
+        }
+        print($"DelTiles   ar => {sb.ToString()}");
+        //ar.Clear();
+    }
+
+    private void DownTiles()
+    {
+        int i, j;
+        for(i = 0; i < 56; i++)
+        {
+            if (pole64[i] == -1)
+            {
+                for(j = i + 8; j < 64; j += 8)
+                {
+                    if (pole64[j] != -1)
+                    {
+                        Vector3 tg1;
+                        tg1.x = (i % 8) - 3.5f; tg1.z = (i / 8) - 3.5f;
+                        tg1.y = 0;
+                        poleGO[j].GetComponent<TailControl>().SetTarget(tg1);
+                        SwapTile(i, j);
+                        break;
+                    }
+                }
+            }
+        }
+        for(i = 0; i < 64; i++)
+        {
+            if (pole64[i] == -1) GenerateTail(i);
         }
     }
 

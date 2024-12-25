@@ -49,7 +49,7 @@ public class RndColorsControl : MonoBehaviour
                         int x, y;
                         x = Mathf.RoundToInt(oldPos.x + 1.5f);
                         y = Mathf.RoundToInt(oldPos.z + 1.5f);
-                        print($"pos => {ball.transform.position}  x={x} y={y}");
+                        //print($"pos => {ball.transform.position}  x={x} y={y}");
                         lc.TranslateColor(arCols[arNumCols[4 * y + x]], arNumCols[4 * y + x]);
                         isRnd = false;
                     }
@@ -60,7 +60,7 @@ public class RndColorsControl : MonoBehaviour
 
     public void SetCast()
     {
-        print("new SetCast");
+        //print("new SetCast");
         Invoke("SetIsRnd", 0.5f);
         Vector3 direction = Vector3.up;
         direction.x = Random.Range(-0.5f, 0.5f);

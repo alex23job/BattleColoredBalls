@@ -77,4 +77,9 @@ public class TailControl : MonoBehaviour
             mr.materials = new Material[] { tileMat, matColor };
         }
     }
+
+    public void DeletingTail()
+    {
+        Destroy(gameObject);
+    }
 }
