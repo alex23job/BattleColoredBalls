@@ -171,7 +171,17 @@ public class LevelControl : MonoBehaviour
                     selectTail = null;
 
                     #region нужно проверить и удалить 3 и более одноцветных плиток
-                    List<int> ar = TestTiles3(selectNum);
+                    List<int> ar = new List<int>();
+                    do
+                    {
+                        ar = TestTotalTiles();
+                        if (ar.Count > 0)
+                        {
+                            DelTiles(ar);
+                            DownTiles();
+                        }                        
+                    } while (ar.Count > 0);
+                    /*List<int> ar = TestTiles3(selectNum);
                     if (ar.Count > 0)
                     {
                         DelTiles(ar);
@@ -181,7 +191,7 @@ public class LevelControl : MonoBehaviour
                     {
                         DelTiles(ar);
                     }
-                    DownTiles();
+                    DownTiles();*/
                     #endregion
 
                     if (currentCol1 == -1 && currentCol2 == -1)
@@ -205,6 +215,76 @@ public class LevelControl : MonoBehaviour
                 }
             }
         }
+    }
+
+    private List<int> TestTotalTiles()
+    {
+        List<int> ar = new List<int>();
+        int i, j;
+        for(i = 0; i < 8; i++)
+        {
+            for(j = 0; j < 8; j++)
+            {
+                List<int> tmp = TestTiles3p(8 * i + j);
+                if (tmp.Count > 0)
+                {                    
+                    foreach(int n in tmp)
+                    {
+                        bool isNew = true;
+                        foreach(int a in ar)
+                        {
+                            if (a == n)
+                            {
+                                isNew = false;
+                                break;
+                            }
+                        }
+                        if (isNew) ar.Add(n);
+                    }
+                }
+            }
+        }
+        return ar;
+    }
+
+    private List<int> TestTiles3p(int num)
+    {
+        List<int> ar = new List<int>();
+        int x = num % 8, y = num / 8, nc = pole64[num];
+        print($"TestTiles3p num={num} x={x} y={y} col={nc}");
+        if (nc == -1) return ar;
+        if (x < 6)
+        {   //  линия горизонтальная
+            if ((pole64[num + 1] == nc) && (pole64[num + 2] == nc))
+            {
+                ar.Add(num);ar.Add(num + 1);ar.Add(num + 2);
+                if ((x < 5) && (pole64[num + 3] == nc))
+                {
+                    ar.Add(num + 3); 
+                    if ((x < 4) && (pole64[num + 4] == nc)) ar.Add(num + 4);
+                }
+            }
+        }
+        if (y < 6)
+        {   //  линия вертикальная
+            if ((pole64[num + 8] == nc) && (pole64[num + 16] == nc))
+            {
+                ar.Add(num); ar.Add(num + 8); ar.Add(num + 16);
+                if ((y < 5) && (pole64[num + 24] == nc))
+                {
+                    ar.Add(num + 24);
+                    if ((y < 4) && (pole64[num + 32] == nc)) ar.Add(num + 32);
+                }
+            }
+        }
+        if ((x < 7) && (y < 7))
+        {   //  квадрат
+            if ((pole64[num + 1] == nc) && (pole64[num + 8] == nc) && (pole64[num + 9] == nc))
+            {
+                ar.Add(num); ar.Add(num + 1); ar.Add(num + 8); ar.Add(num + 9);
+            }
+        }
+        return ar;
     }
 
     private List<int> TestTiles3(int num)
