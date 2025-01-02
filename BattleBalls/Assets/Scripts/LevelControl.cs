@@ -16,9 +16,13 @@ public class LevelControl : MonoBehaviour
     private GameObject[] poleGO;
     private int currentCol1 = -1, currentCol2 = -1;
     private GameObject selectTail = null;
+
+    private Vector3 rndPosL, rndPosR;
     // Start is called before the first frame update
     void Start()
     {
+        rndPosL = new Vector3(-6.5f, 1, -4);
+        rndPosR = new Vector3(6.5f, 1, -4);
         GeneratePole();
         GetNextStep();
     }
@@ -104,6 +108,8 @@ public class LevelControl : MonoBehaviour
 
     private void GetNextStep()
     {
+        if (modeSteps == 0) rndColors.transform.position = rndPosL;
+        if (modeSteps == 2) rndColors.transform.position = rndPosR;
         rndColors.gameObject.SetActive(true);
         rndColors.SetCast();
     }
@@ -251,7 +257,7 @@ public class LevelControl : MonoBehaviour
     {
         List<int> ar = new List<int>();
         int x = num % 8, y = num / 8, nc = pole64[num];
-        print($"TestTiles3p num={num} x={x} y={y} col={nc}");
+        //print($"TestTiles3p num={num} x={x} y={y} col={nc}");
         if (nc == -1) return ar;
         if (x < 6)
         {   //  линия горизонтальная
