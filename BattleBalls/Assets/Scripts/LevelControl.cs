@@ -183,9 +183,16 @@ public class LevelControl : MonoBehaviour
                         ar = TestTotalTiles();
                         if (ar.Count > 0)
                         {
+                            new WaitForSecondsRealtime(0.5f);
                             DelTiles(ar);
                             DownTiles();
-                        }                        
+                        }
+                        StringBuilder sb = new StringBuilder();
+                        for(int k = 0; k < 8; k++)
+                        {
+                            sb.Append($"< {pole64[8 * k]} {pole64[8 * k + 1]} {pole64[8 * k + 2]} {pole64[8 * k + 3]} {pole64[8 * k + 4]} {pole64[8 * k + 5]} {pole64[8 * k + 6]} {pole64[8 * k + 7]} > ");
+                        }
+                        print(sb.ToString());
                     } while (ar.Count > 0);
                     /*List<int> ar = TestTiles3(selectNum);
                     if (ar.Count > 0)
@@ -415,6 +422,7 @@ public class LevelControl : MonoBehaviour
                         tg1.x = (i % 8) - 3.5f; tg1.z = (i / 8) - 3.5f;
                         tg1.y = 0;
                         poleGO[j].GetComponent<TailControl>().SetTarget(tg1);
+                        //poleGO[j].GetComponent<TailControl>().SetNewPosition(tg1);
                         SwapTile(i, j);
                         break;
                     }
@@ -423,7 +431,11 @@ public class LevelControl : MonoBehaviour
         }
         for(i = 0; i < 64; i++)
         {
-            if (pole64[i] == -1) GenerateTail(i);
+            if (pole64[i] == -1)
+            {
+                GenerateTail(i);
+                print($"generate {i} => {pole64[i]} {poleGO[i].GetComponent<TailControl>().NumCol}");
+            }
         }
     }
 

@@ -67,6 +67,11 @@ public class TailControl : MonoBehaviour
         isMove = true;
     }
 
+    public void SetNewPosition(Vector3 tg)
+    {
+        transform.position = tg;
+    }
+
     public void SetColor(int num, Material matColor)
     {
         nCol = num;
