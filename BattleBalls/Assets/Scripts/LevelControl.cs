@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -11,11 +12,15 @@ public class LevelControl : MonoBehaviour
     [SerializeField] private Material[] arMats;
     [SerializeField] private GameObject tailPrefab;
 
+    [SerializeField] private EnemyControl enemyControl;
+
     private int modeSteps = 0;
     private int[] pole64;
     private GameObject[] poleGO;
     private int currentCol1 = -1, currentCol2 = -1;
     private GameObject selectTail = null;
+
+    private int[] cntColBalls;
 
     private Vector3 rndPosL, rndPosR;
     // Start is called before the first frame update
@@ -203,6 +208,7 @@ public class LevelControl : MonoBehaviour
 
     private void CikleTest()
     {
+        cntColBalls = new int[8];
         #region нужно проверить и удалить 3 и более одноцветных плиток
         //new WaitForSecondsRealtime(1f);
         List<int> ar = new List<int>();
@@ -237,6 +243,47 @@ public class LevelControl : MonoBehaviour
         }
         DownTiles();*/
         #endregion
+        UseBalls();
+    }
+
+    private void UseBalls()
+    {
+        IWarior warior = null;
+        if (modeSteps == 0)
+        {
+
+        }
+        if (modeSteps == 2)
+        {
+            warior = enemyControl as IWarior;
+        }
+        for(int i = 0; i < 8; i++)
+        {
+            if (cntColBalls[i] > 0)
+            {
+                switch(i)
+                {
+                    case 0: //  красный
+                        break;
+                    case 1: //  зелёный
+                        break;
+                    case 2: //  жёлтый
+                        break;
+                    case 3: //  синий
+                        break;
+                    case 4: //  бирюзовый (голубой)
+                        break;
+                    case 5: //  магента
+                        break;
+                    case 6: //  коричневый
+                        break;
+                    case 7: //  оранжевый
+                        warior.BallsEffect(cntColBalls[i], 7, 0);   //  proba
+                        break;
+                }
+            }
+        }
+        cntColBalls = null;
     }
 
     private List<int> TestTotalTiles()
@@ -403,10 +450,12 @@ public class LevelControl : MonoBehaviour
 
     private void DelTiles(List<int> ar)
     {
-        int i;
+        int i, col;
         StringBuilder sb = new StringBuilder();
         for(i = 0; i < ar.Count; i++)
         {
+            col = pole64[ar[i]];
+            if (col >= 0 && col < 8) cntColBalls[col]++;
             sb.Append($"{ar[i]} ");
             pole64[ar[i]] = -1;
             if (poleGO[ar[i]] != null) poleGO[ar[i]].GetComponent<TailControl>().DeletingTail();
