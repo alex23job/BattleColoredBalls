@@ -14,7 +14,7 @@ public class TailControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        target = transform.position;
+        //target = transform.position;
     }
 
     // Update is called once per frame
@@ -63,13 +63,13 @@ public class TailControl : MonoBehaviour
 
     public void SetTarget(Vector3 tg)
     {
-        target = tg;
+        target = new Vector3(tg.x, tg.y, tg.z);
         isMove = true;
     }
 
     public void SetNewPosition(Vector3 tg)
     {
-        transform.position = tg;
+        transform.position = new Vector3(tg.x, tg.y, tg.z);
     }
 
     public void SetColor(int num, Material matColor)

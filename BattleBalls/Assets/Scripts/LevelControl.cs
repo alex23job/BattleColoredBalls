@@ -176,36 +176,7 @@ public class LevelControl : MonoBehaviour
                     SwapTile(selectNum, num);
                     selectTail = null;
 
-                    #region нужно проверить и удалить 3 и более одноцветных плиток
-                    List<int> ar = new List<int>();
-                    do
-                    {
-                        ar = TestTotalTiles();
-                        if (ar.Count > 0)
-                        {
-                            new WaitForSecondsRealtime(0.5f);
-                            DelTiles(ar);
-                            DownTiles();
-                        }
-                        StringBuilder sb = new StringBuilder();
-                        for(int k = 0; k < 8; k++)
-                        {
-                            sb.Append($"< {pole64[8 * k]} {pole64[8 * k + 1]} {pole64[8 * k + 2]} {pole64[8 * k + 3]} {pole64[8 * k + 4]} {pole64[8 * k + 5]} {pole64[8 * k + 6]} {pole64[8 * k + 7]} > ");
-                        }
-                        print(sb.ToString());
-                    } while (ar.Count > 0);
-                    /*List<int> ar = TestTiles3(selectNum);
-                    if (ar.Count > 0)
-                    {
-                        DelTiles(ar);
-                    }
-                    ar = TestTiles3(num);
-                    if (ar.Count > 0)
-                    {
-                        DelTiles(ar);
-                    }
-                    DownTiles();*/
-                    #endregion
+                    Invoke("CikleTest", 0.5f);
 
                     if (currentCol1 == -1 && currentCol2 == -1)
                     {   //  ход игрока сделан - теперь ход БОТа
@@ -228,6 +199,44 @@ public class LevelControl : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void CikleTest()
+    {
+        #region нужно проверить и удалить 3 и более одноцветных плиток
+        //new WaitForSecondsRealtime(1f);
+        List<int> ar = new List<int>();
+        do
+        {
+            ar = TestTotalTiles();
+            if (ar.Count > 0)
+            {
+                //new WaitForSecondsRealtime(1f);
+                DelTiles(ar);
+                DownTiles();
+                //new WaitForSecondsRealtime(1f);
+            }
+            StringBuilder sb = new StringBuilder();
+            for (int k = 0; k < 8; k++)
+            {
+                sb.Append($"< {pole64[8 * k]} {pole64[8 * k + 1]} {pole64[8 * k + 2]} {pole64[8 * k + 3]} {pole64[8 * k + 4]} {pole64[8 * k + 5]} {pole64[8 * k + 6]} {pole64[8 * k + 7]} > ");
+            }
+            print(sb.ToString());
+        } while (ar.Count > 0);
+        MoveTiles();
+        //Invoke("MoveTiles", 0.7f);
+        /*List<int> ar = TestTiles3(selectNum);
+        if (ar.Count > 0)
+        {
+            DelTiles(ar);
+        }
+        ar = TestTiles3(num);
+        if (ar.Count > 0)
+        {
+            DelTiles(ar);
+        }
+        DownTiles();*/
+        #endregion
     }
 
     private List<int> TestTotalTiles()
@@ -418,12 +427,15 @@ public class LevelControl : MonoBehaviour
                 {
                     if (pole64[j] != -1)
                     {
-                        Vector3 tg1;
+                        /*Vector3 tg1;
                         tg1.x = (i % 8) - 3.5f; tg1.z = (i / 8) - 3.5f;
                         tg1.y = 0;
-                        poleGO[j].GetComponent<TailControl>().SetTarget(tg1);
-                        //poleGO[j].GetComponent<TailControl>().SetNewPosition(tg1);
-                        SwapTile(i, j);
+                        poleGO[j].GetComponent<TailControl>().SetTarget(tg1);*/
+                        //poleGO[j].GetComponent<TailControl>().SetNewPosition(tg1);                        
+                        //print($"Down Swap {i}({tg1}) <> {j}({poleGO[j].transform.position})");
+                        //SwapTile(i, j);
+                        pole64[i] = pole64[j];pole64[j] = -1;
+                        poleGO[i] = poleGO[j];poleGO[j] = null;
                         break;
                     }
                 }
@@ -436,6 +448,18 @@ public class LevelControl : MonoBehaviour
                 GenerateTail(i);
                 print($"generate {i} => {pole64[i]} {poleGO[i].GetComponent<TailControl>().NumCol}");
             }
+        }
+    }
+
+    private void MoveTiles()
+    {
+        for(int i = 0; i < 64; i++)
+        {
+            Vector3 tg1;
+            tg1.x = (i % 8) - 3.5f; tg1.z = (i / 8) - 3.5f;
+            tg1.y = 0;
+            //poleGO[i].GetComponent<TailControl>().SetNewPosition(tg1);    //  ok
+            poleGO[i].GetComponent<TailControl>().SetTarget(tg1);   //  no - ?
         }
     }
 
