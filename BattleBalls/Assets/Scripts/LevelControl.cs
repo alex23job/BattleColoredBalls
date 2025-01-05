@@ -30,6 +30,7 @@ public class LevelControl : MonoBehaviour
         rndPosR = new Vector3(6.5f, 1, -4);
         GeneratePole();
         GetNextStep();
+        enemyControl.SetParams(WariorParams.arrWariorParams[0]);
     }
 
     // Update is called once per frame

@@ -18,6 +18,8 @@ namespace Assets.Scripts
         public int LevelCian { get; }  //  уровень заклинаний влияющих на магию (cian)
         public int LevelBrown { get; }  //  уровень заклинаний влияющих на огонь (brown)
 
+        public int Immunity { get; }    //  иммунитет: 1 - вампиризм, 2 - яд, 3 - магия, 4 - огонь, 5 - пропуск хода
+
         public void ChangeHP(int zn);
 
         public void BallsEffect(int zn, int col, int prc);

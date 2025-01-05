@@ -2287,8 +2287,8 @@ MonoBehaviour:
   crossBotRight: {fileID: 548147986}
   playerHP: {fileID: 101981274}
   botHP: {fileID: 1168292930}
-  txtPlName: {fileID: 0}
-  txtBotName: {fileID: 0}
+  txtPlName: {fileID: 1451554928}
+  txtBotName: {fileID: 552285389}
 --- !u!114 &1960032454
 MonoBehaviour:
   m_ObjectHideFlags: 0
