@@ -5,12 +5,17 @@ using UnityEngine;
 public class TailControl : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private GameObject selectCube;
 
     private int nCol;
     public int NumCol { get { return nCol; } }
 
     private Vector3 target;
     private bool isMove = false;
+
+    private float timer = 0.25f;
+    private bool isHint = false;
+    private bool flipFlop = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +25,16 @@ public class TailControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isHint)
+        {
+            if (timer > 0) timer -= Time.deltaTime;
+            else
+            {
+                timer = 0.25f;
+                flipFlop = !flipFlop;
+                selectCube.SetActive(flipFlop);
+            }
+        }
         if (isMove)
         {
             if (transform.position != target)
@@ -86,5 +101,11 @@ public class TailControl : MonoBehaviour
     public void DeletingTail()
     {
         Destroy(gameObject);
+    }
+
+    public void SetHint(bool zn)
+    {
+        isHint = zn;
+        if (isHint == false) selectCube.SetActive(false);
     }
 }

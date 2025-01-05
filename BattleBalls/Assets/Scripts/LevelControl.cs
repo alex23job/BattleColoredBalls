@@ -108,6 +108,7 @@ public class LevelControl : MonoBehaviour
         if (modeSteps == 1 || modeSteps == 3) { currentCol2 = numCol; ui_Control.ViewCross(modeSteps, false); }
         ui_Control.ViewBalls(modeSteps++, col);
         modeSteps %= 4;
+        SelectCurrentCol(numCol, true);
         if ((modeSteps % 2) > 0) GetNextStep();
         else Invoke("DeactiveRndColors", 1f);
     }
@@ -123,6 +124,17 @@ public class LevelControl : MonoBehaviour
     private void DeactiveRndColors()
     {
         rndColors.gameObject.SetActive(false);
+    }
+
+    private void SelectCurrentCol(int numCol, bool zn)
+    {
+        for (int i = 0; i < 64; i++)
+        {
+            if (pole64[i] == numCol)
+            {
+                poleGO[i].GetComponent<TailControl>().SetHint(zn);
+            }
+        }
     }
 
     private void SwapTile(int src, int dst)
@@ -177,8 +189,16 @@ public class LevelControl : MonoBehaviour
                     tg1.x = x - 3.5f; tg1.z = y - 3.5f;
                     tg1.y = 0;
                     selectTail.GetComponent<TailControl>().SetTarget(tg1);
-                    if (pole64[selectNum] == currentCol1) { currentCol1 = -1; ui_Control.ViewCross(0, true); }
-                    else if (pole64[selectNum] == currentCol2) { currentCol2 = -1; ui_Control.ViewCross(1, true); }
+                    if (pole64[selectNum] == currentCol1) 
+                    {
+                        if (currentCol1 != currentCol2) SelectCurrentCol(currentCol1, false);
+                        currentCol1 = -1; ui_Control.ViewCross(0, true); 
+                    }
+                    else if (pole64[selectNum] == currentCol2) 
+                    {
+                        if (currentCol1 != currentCol2) SelectCurrentCol(currentCol2, false);
+                        currentCol2 = -1; ui_Control.ViewCross(1, true); 
+                    }
                     SwapTile(selectNum, num);
                     selectTail = null;
 
