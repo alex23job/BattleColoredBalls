@@ -117,8 +117,80 @@ public class EnemyAI : MonoBehaviour
     private List<int> TestTotalMath3(int d, int s, int[] p)
     {
         List<int> ar = new List<int>();
+        int[] pl = new int[64];
+        int i, j;
+        for (i = 0; i < 64; i++) pl[i] = p[i];
+        j = pl[d];
+        pl[d] = pl[s];
+        pl[s] = j;
+
+        for (i = 0; i < 8; i++)
+        {
+            for (j = 0; j < 8; j++)
+            {
+                List<int> tmp = TestTiles3p(8 * i + j, pl);
+                if (tmp.Count > 0)
+                {
+                    foreach (int n in tmp)
+                    {
+                        bool isNew = true;
+                        foreach (int a in ar)
+                        {
+                            if (a == n)
+                            {
+                                isNew = false;
+                                break;
+                            }
+                        }
+                        if (isNew) ar.Add(n);
+                    }
+                }
+            }
+        }
+
         return ar;
     }
+
+    private List<int> TestTiles3p(int num, int[] pole64)
+    {
+        List<int> ar = new List<int>();
+        int x = num % 8, y = num / 8, nc = pole64[num];
+        //print($"TestTiles3p num={num} x={x} y={y} col={nc}");
+        if (nc == -1) return ar;
+        if (x < 6)
+        {   //  линия горизонтальная
+            if ((pole64[num + 1] == nc) && (pole64[num + 2] == nc))
+            {
+                ar.Add(num); ar.Add(num + 1); ar.Add(num + 2);
+                if ((x < 5) && (pole64[num + 3] == nc))
+                {
+                    ar.Add(num + 3);
+                    if ((x < 4) && (pole64[num + 4] == nc)) ar.Add(num + 4);
+                }
+            }
+        }
+        if (y < 6)
+        {   //  линия вертикальная
+            if ((pole64[num + 8] == nc) && (pole64[num + 16] == nc))
+            {
+                ar.Add(num); ar.Add(num + 8); ar.Add(num + 16);
+                if ((y < 5) && (pole64[num + 24] == nc))
+                {
+                    ar.Add(num + 24);
+                    if ((y < 4) && (pole64[num + 32] == nc)) ar.Add(num + 32);
+                }
+            }
+        }
+        if ((x < 7) && (y < 7))
+        {   //  квадрат
+            if ((pole64[num + 1] == nc) && (pole64[num + 8] == nc) && (pole64[num + 9] == nc))
+            {
+                ar.Add(num); ar.Add(num + 1); ar.Add(num + 8); ar.Add(num + 9);
+            }
+        }
+        return ar;
+    }
+
 
     private void SelectBestStep()
     {
