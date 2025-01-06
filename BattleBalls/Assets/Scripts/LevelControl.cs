@@ -57,7 +57,7 @@ public class LevelControl : MonoBehaviour
 
     private void GenerateTail(int numPos, bool testAllColors = false)
     {
-        int numCol = 0;
+        int numCol = -1;
         if (testAllColors)
         {
             int mask = 0, i;
@@ -80,7 +80,7 @@ public class LevelControl : MonoBehaviour
                 }
             }
         }
-        else
+        if (numCol == -1)
         {
             do
             {
@@ -168,6 +168,11 @@ public class LevelControl : MonoBehaviour
         }
     }
 
+    private void OffAllTile()
+    {
+        for (int i = 0; i < 64; i++) poleGO[i].GetComponent<TailControl>().SetHint(false);
+    }
+
     private void SwapTile(int src, int dst)
     {
         GameObject tmp = poleGO[src];
@@ -209,13 +214,19 @@ public class LevelControl : MonoBehaviour
 
         if (currentCol1 == -1 && currentCol2 == -1)
         {   //  ход БОТа сделан - теперь ход игрока
-
-            GetNextStep();
+            OffAllTile();
+            Invoke("GetNextStep", 0.7f);
+            //GetNextStep();
         }
         else
         {
-            enemyLogic.GenerateNextStep(currentCol1, currentCol2, pole64);
+            Invoke("BotNextStep", 0.6f);
         }
+    }
+
+    public void BotNextStep()
+    {
+        enemyLogic.GenerateNextStep(currentCol1, currentCol2, pole64);
     }
 
     public void TranslatePosition(Vector3 pos)
@@ -277,8 +288,9 @@ public class LevelControl : MonoBehaviour
 
                     if (currentCol1 == -1 && currentCol2 == -1)
                     {   //  ход игрока сделан - теперь ход БОТа
-
-                        GetNextStep();
+                        OffAllTile();
+                        Invoke("GetNextStep", 0.7f);
+                        //GetNextStep();
                     }
                 }
                 else

@@ -65,6 +65,8 @@ public class RndColorsControl : MonoBehaviour
         Vector3 direction = Vector3.up;
         direction.x = Random.Range(-0.5f, 0.5f);
         direction.z = Random.Range(-0.5f, 0.5f);
+        if ((direction.x > -0.05f) && (direction.x < 0.05f)) direction.x += Random.Range(0.2f, 0.6f);
+        if ((direction.z > -0.05f) && (direction.z < 0.05f)) direction.z += Random.Range(0.2f, 0.6f);
         rigidbodyBall.AddForce(direction * force, ForceMode.Impulse);
     }
 
