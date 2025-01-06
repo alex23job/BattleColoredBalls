@@ -13,6 +13,7 @@ public class LevelControl : MonoBehaviour
     [SerializeField] private GameObject tailPrefab;
 
     [SerializeField] private EnemyControl enemyControl;
+    [SerializeField] private EnemyAI enemyLogic;
 
     private int modeSteps = 0;
     private int[] pole64;
@@ -54,13 +55,38 @@ public class LevelControl : MonoBehaviour
         }
     }
 
-    private void GenerateTail(int numPos)
+    private void GenerateTail(int numPos, bool testAllColors = false)
     {
-        int numCol;
-        do
+        int numCol = 0;
+        if (testAllColors)
         {
-            numCol = Random.Range(0, 8);
-        } while (false == TestColorTails(numPos, numCol));
+            int mask = 0, i;
+            for (i = 0; i < 64; i++)
+            {
+                if (pole64[i] != -1)
+                {
+                    mask |= 1 << pole64[i];
+                    if (mask == 0xff) break;
+                }
+            }
+            if (mask != 0xff)
+            {
+                for (i = 0; i < 8; i++)
+                {
+                    if ((mask & (1 << i)) == 0)
+                    {
+                        numCol = i;break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            do
+            {
+                numCol = Random.Range(0, 8);
+            } while (false == TestColorTails(numPos, numCol));
+        }
         Vector3 pos = Vector3.zero;
         pos.x = (numPos % 8) - 3.5f;
         pos.z = (numPos / 8) - 3.5f;
@@ -104,8 +130,13 @@ public class LevelControl : MonoBehaviour
 
     public void TranslateColor(Color col, int numCol)
     {
+        //  подумать что делать если выпал цвет а таких плиток нет !!!
         if (modeSteps == 0 || modeSteps == 2) { currentCol1 = numCol; ui_Control.ViewCross(modeSteps, false); }
         if (modeSteps == 1 || modeSteps == 3) { currentCol2 = numCol; ui_Control.ViewCross(modeSteps, false); }
+        if (modeSteps == 3)
+        {
+            enemyLogic.GenerateNextStep(currentCol1, currentCol2, pole64);
+        }
         ui_Control.ViewBalls(modeSteps++, col);
         modeSteps %= 4;
         SelectCurrentCol(numCol, true);
@@ -145,6 +176,46 @@ public class LevelControl : MonoBehaviour
         int ind = pole64[src];
         pole64[src] = pole64[dst];
         pole64[dst] = ind;
+    }
+
+    /// <summary>
+    /// Перестановка двух плиток по "команде" Бота и реакция на этот ход
+    /// </summary>
+    /// <param name="numTile1">номер tile откуда</param>
+    /// <param name="numTile2">номер tile куда</param>
+    public void TranslateStep(int numTile1, int numTile2)
+    {
+        Vector3 tg1;
+        tg1.x = (numTile1 % 8) - 3.5f; tg1.z = (numTile1 / 8) - 3.5f;
+        tg1.y = 0;
+        poleGO[numTile2].GetComponent<TailControl>().SetTarget(tg1);
+        tg1.x = (numTile2 % 8) - 3.5f; tg1.z = (numTile2 / 8) - 3.5f;
+        tg1.y = 0;
+        poleGO[numTile1].GetComponent<TailControl>().SetTarget(tg1);
+        if (pole64[numTile1] == currentCol1)
+        {
+            if (currentCol1 != currentCol2) SelectCurrentCol(currentCol1, false);
+            currentCol1 = -1; ui_Control.ViewCross(2, true);
+        }
+        else if (pole64[numTile1] == currentCol2)
+        {
+            if (currentCol1 != currentCol2) SelectCurrentCol(currentCol2, false);
+            currentCol2 = -1; ui_Control.ViewCross(3, true);
+        }
+        SwapTile(numTile1, numTile2);
+        selectTail = null;
+
+        Invoke("CikleTest", 0.5f);
+
+        if (currentCol1 == -1 && currentCol2 == -1)
+        {   //  ход БОТа сделан - теперь ход игрока
+
+            GetNextStep();
+        }
+        else
+        {
+            enemyLogic.GenerateNextStep(currentCol1, currentCol2, pole64);
+        }
     }
 
     public void TranslatePosition(Vector3 pos)
@@ -515,7 +586,7 @@ public class LevelControl : MonoBehaviour
         {
             if (pole64[i] == -1)
             {
-                GenerateTail(i);
+                GenerateTail(i, true);
                 print($"generate {i} => {pole64[i]} {poleGO[i].GetComponent<TailControl>().NumCol}");
             }
         }

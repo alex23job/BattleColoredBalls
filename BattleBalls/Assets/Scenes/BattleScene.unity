@@ -1341,6 +1341,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 722e260d3fe0b2744920000f4e54129b, type: 2}
   tailPrefab: {fileID: 357235560859097500, guid: e95f02409ea829241b57d15be85e7e52, type: 3}
   enemyControl: {fileID: 1392727346}
+  enemyLogic: {fileID: 1392727348}
 --- !u!4 &922577157
 Transform:
   m_ObjectHideFlags: 0
@@ -1772,6 +1773,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1392727347}
   - component: {fileID: 1392727346}
+  - component: {fileID: 1392727348}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1808,6 +1810,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1392727348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392727345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3097f2bb867068641b1c17f1324f2c7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ui_Control: {fileID: 1960032453}
+  levelControl: {fileID: 922577156}
 --- !u!1 &1436976915
 GameObject:
   m_ObjectHideFlags: 0
