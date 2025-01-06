@@ -54,24 +54,28 @@ public class EnemyAI : MonoBehaviour
                 np = n - 1;
                 List<int> ar = TestTotalMath3(n, np, p);
                 arSteps.Add(new StepCase(n, np, ar.Count));
+                if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
             if (x < 7)
             {
                 np = n + 1;
                 List<int> ar = TestTotalMath3(n, np, p);
                 arSteps.Add(new StepCase(n, np, ar.Count));
+                if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
             if (y > 0)
             {
                 np = n - 8;
                 List<int> ar = TestTotalMath3(n, np, p);
                 arSteps.Add(new StepCase(n, np, ar.Count));
+                if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
             if (y < 7)
             {
                 np = n + 8;
                 List<int> ar = TestTotalMath3(n, np, p);
                 arSteps.Add(new StepCase(n, np, ar.Count));
+                if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
         }
         SelectBestStep();
@@ -91,24 +95,28 @@ public class EnemyAI : MonoBehaviour
                 np = n - 1;
                 List<int> ar = TestTotalMath3(n, np, p);
                 arSteps.Add(new StepCase(n, np, ar.Count));
+                if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
             if (x < 7)
             {
                 np = n + 1;
                 List<int> ar = TestTotalMath3(n, np, p);
                 arSteps.Add(new StepCase(n, np, ar.Count));
+                if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
             if (y > 0)
             {
                 np = n - 8;
                 List<int> ar = TestTotalMath3(n, np, p);
                 arSteps.Add(new StepCase(n, np, ar.Count));
+                if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
             if (y < 7)
             {
                 np = n + 8;
                 List<int> ar = TestTotalMath3(n, np, p);
                 arSteps.Add(new StepCase(n, np, ar.Count));
+                if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
         }
         SelectBestStep();
@@ -189,6 +197,30 @@ public class EnemyAI : MonoBehaviour
             }
         }
         return ar;
+    }
+
+    private bool TestTile2(int d, int s, int[] p)
+    {
+        int[] pl = new int[64];
+        int i, j;
+        for (i = 0; i < 64; i++) pl[i] = p[i];
+        j = pl[d];
+        pl[d] = pl[s];
+        pl[s] = j;
+        //  две одного цвета рядом ?
+        int x = d % 8, y = d / 8, nc = pl[d];
+        if (x > 0 && pl[d - 1] == nc) return true;
+        if (x < 7 && pl[d + 1] == nc) return true;
+        if (y > 0 && pl[d - 8] == nc) return true;
+        if (y < 7 && pl[d + 8] == nc) return true;
+
+        x = s % 8; y = s / 8; nc = pl[s];
+        if (x > 0 && pl[s - 1] == nc) return true;
+        if (x < 7 && pl[s + 1] == nc) return true;
+        if (y > 0 && pl[s - 8] == nc) return true;
+        if (y < 7 && pl[s + 8] == nc) return true;
+
+        return false;
     }
 
 
