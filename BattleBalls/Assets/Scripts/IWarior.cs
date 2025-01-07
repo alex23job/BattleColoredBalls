@@ -20,6 +20,12 @@ namespace Assets.Scripts
 
         public int Immunity { get; }    //  иммунитет: 1 - вампиризм, 2 - яд, 3 - магия, 4 - огонь, 5 - пропуск хода
 
+        public int StepsToxin { get; set; }
+        public int StepsFire { get; set; }
+
+        public int BonusLine { get; set; }
+        public int BonusRect { get; set; }
+
         public void ChangeHP(int zn);
 
         public void BallsEffect(int zn, int col, int prc);

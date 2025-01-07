@@ -20,9 +20,7 @@ public class EnemyControl : MonoBehaviour, IWarior
     private int levelHealing;
     private int levelCian;
     private int levelBrown;
-
-
-    public int MaxHP { get => maxHP; set { maxHP = (value >= 0) ? value : 0; } }
+     public int MaxHP { get => maxHP; set { maxHP = (value >= 0) ? value : 0; } }
     public int CurrentHP { get => currentHP; }
 
     public int ToxinPercent { get => toxinPercent; }
@@ -35,6 +33,16 @@ public class EnemyControl : MonoBehaviour, IWarior
     public int LevelBrown { get => levelBrown; }
 
     public int Immunity { get => immunity; }
+    public int BonusLine { get; set; }
+    public int BonusRect { get; set; }
+    public int StepsToxin { get; set; }
+    public int StepsFire { get; set; }
+
+    public int TmpImmunity = 0; // 2 - огонь на 1 ход, 1 - магия на 1 ход
+
+    public int Tmp2x = 0; //    1 - 2x магия, 2 - 2x огонь
+
+    public bool StepBreak = false;
 
     public void ChangeHP(int zn)
     {
@@ -81,24 +89,65 @@ public class EnemyControl : MonoBehaviour, IWarior
 
     public void BallsEffect(int zn, int col, int prc)
     {
+        int rndPrc = Random.Range(0, 101);
+        int dmg = zn;
         switch(col)
         {
             case 0: //  красный
+                if (immunity != 1) ChangeHP(-zn);
                 break;
             case 1: //  зелёный
+                if (immunity != 2)
+                {
+                    if ((Tmp2x & 0x04) != 0)
+                    {
+                        zn *= 2;Tmp2x &= 0x04;
+                    }
+                    ChangeHP(-zn);
+                    if (rndPrc <= prc) StepsToxin = 3;
+                }
                 break;
             case 2: //  жёлтый
+                if (zn == 3) { StepsFire = 0; StepsToxin = 0; }
+                if ((zn == 4) && (levelSpell == 2)) Tmp2x = 7;
+                if (zn == 5) StepBreak = true;
                 break;
             case 3: //  синий
+                if (levelMagic == 2 && zn == 4) dmg = maxHP / 10;
+                if (levelMagic == 3 && zn == 5) dmg = maxHP / 4;
+                if ((Tmp2x & 0x01) != 0)
+                {
+                    dmg *= 2; Tmp2x &= 0x01;
+                }
+                if ((immunity != 3) || ((TmpImmunity & 1) != 0)) ChangeHP(-dmg);
+                TmpImmunity &= 0x02;
                 break;
             case 4: //  бирюзовый (голубой)
+                TmpImmunity |= 1;
+                if ((levelCian == 2) && (zn == 4)) Tmp2x |= 0x02;
+                if (levelCian == 3) BonusLine++;
                 break;
-            case 5: //  магента
+            case 5: //  магента - лечение
+                if (levelHealing == 2) dmg = maxHP / 10;
+                if (levelHealing == 3) dmg = maxHP / 4;
+                ChangeHP(dmg);
                 break;
             case 6: //  коричневый
+                TmpImmunity |= 2;
+                if (levelBrown == 2 && zn == 4) Tmp2x |= 0x01;
+                if (levelBrown == 3) BonusRect++;
                 break;
             case 7: //  оранжевый
-                ChangeHP(-zn);   //  proba
+                if (immunity != 4 || ((TmpImmunity & 2) != 0))
+                {
+                    if ((Tmp2x & 0x02) != 0)
+                    {
+                        zn *= 2; Tmp2x &= 0x02;
+                    }
+                    ChangeHP(-zn);   //  proba
+                    if (rndPrc <= prc) StepsFire = 3;
+                }
+                TmpImmunity &= 0x01;
                 break;
         }
     }

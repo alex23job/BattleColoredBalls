@@ -52,29 +52,29 @@ public class EnemyAI : MonoBehaviour
             if (x > 0)
             {
                 np = n - 1;
-                List<int> ar = TestTotalMath3(n, np, p);
-                arSteps.Add(new StepCase(n, np, ar.Count));
+                List<int> ar = TestTotalMath3(n, np, p, out List<CountTileColors> list);
+                arSteps.Add(new StepCase(n, np, ar.Count, list));
                 if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
             if (x < 7)
             {
                 np = n + 1;
-                List<int> ar = TestTotalMath3(n, np, p);
-                arSteps.Add(new StepCase(n, np, ar.Count));
+                List<int> ar = TestTotalMath3(n, np, p, out List<CountTileColors> list);
+                arSteps.Add(new StepCase(n, np, ar.Count, list));
                 if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
             if (y > 0)
             {
                 np = n - 8;
-                List<int> ar = TestTotalMath3(n, np, p);
-                arSteps.Add(new StepCase(n, np, ar.Count));
+                List<int> ar = TestTotalMath3(n, np, p, out List<CountTileColors> list);
+                arSteps.Add(new StepCase(n, np, ar.Count, list));
                 if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
             if (y < 7)
             {
                 np = n + 8;
-                List<int> ar = TestTotalMath3(n, np, p);
-                arSteps.Add(new StepCase(n, np, ar.Count));
+                List<int> ar = TestTotalMath3(n, np, p, out List<CountTileColors> list);
+                arSteps.Add(new StepCase(n, np, ar.Count, list));
                 if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
         }
@@ -93,36 +93,36 @@ public class EnemyAI : MonoBehaviour
             if (x > 0)
             {
                 np = n - 1;
-                List<int> ar = TestTotalMath3(n, np, p);
-                arSteps.Add(new StepCase(n, np, ar.Count));
+                List<int> ar = TestTotalMath3(n, np, p, out List<CountTileColors> list);
+                arSteps.Add(new StepCase(n, np, ar.Count, list));
                 if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
             if (x < 7)
             {
                 np = n + 1;
-                List<int> ar = TestTotalMath3(n, np, p);
-                arSteps.Add(new StepCase(n, np, ar.Count));
+                List<int> ar = TestTotalMath3(n, np, p, out List<CountTileColors> list);
+                arSteps.Add(new StepCase(n, np, ar.Count, list));
                 if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
             if (y > 0)
             {
                 np = n - 8;
-                List<int> ar = TestTotalMath3(n, np, p);
-                arSteps.Add(new StepCase(n, np, ar.Count));
+                List<int> ar = TestTotalMath3(n, np, p, out List<CountTileColors> list);
+                arSteps.Add(new StepCase(n, np, ar.Count, list));
                 if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
             if (y < 7)
             {
                 np = n + 8;
-                List<int> ar = TestTotalMath3(n, np, p);
-                arSteps.Add(new StepCase(n, np, ar.Count));
+                List<int> ar = TestTotalMath3(n, np, p, out List<CountTileColors> list);
+                arSteps.Add(new StepCase(n, np, ar.Count, list));
                 if ((ar.Count == 0) && TestTile2(n, np, p)) arSteps.Add(new StepCase(n, np, 2));
             }
         }
         SelectBestStep();
     }
 
-    private List<int> TestTotalMath3(int d, int s, int[] p)
+    private List<int> TestTotalMath3(int d, int s, int[] p, out List<CountTileColors> list)
     {
         List<int> ar = new List<int>();
         int[] pl = new int[64];
@@ -153,6 +153,25 @@ public class EnemyAI : MonoBehaviour
                         if (isNew) ar.Add(n);
                     }
                 }
+            }
+        }
+        list = new List<CountTileColors>();
+        if (ar.Count > 0)
+        {            
+            foreach(int n in ar)
+            {
+                int nCol = pl[n];
+                bool isNew = true;
+                foreach(CountTileColors ctc in list)
+                {
+                    if (ctc.NumColor == nCol)
+                    {
+                        ctc.AddCount();
+                        isNew = false;
+                        break;
+                    }
+                }
+                if (isNew) list.Add(new CountTileColors(nCol, 1));
             }
         }
 
@@ -244,12 +263,14 @@ public class StepCase
     public int dst; //  откуда
     public int src; //  куда
     public int quality = 0; //  выиграшность хода
+    public List<CountTileColors> aC = new List<CountTileColors>();    //  массив шаров по цветам
 
     public StepCase() { }
-    public StepCase(int d, int s, int q)
+    public StepCase(int d, int s, int q, List<CountTileColors> arCC = null)
     {
         dst = d;
         src = s;
         quality = q;
+        if (arCC != null) foreach (CountTileColors cc in arCC) aC.Add(new CountTileColors(cc.NumColor, cc.Count));
     }
 }

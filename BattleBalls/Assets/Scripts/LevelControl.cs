@@ -626,3 +626,14 @@ public class LevelControl : MonoBehaviour
 
     }
 }
+
+public class CountTileColors
+{
+    int numColor;
+    int count;
+    public CountTileColors() { }
+    public CountTileColors(int col, int num) { numColor = col; count = num; }
+    public int Count { get => count; }
+    public int NumColor { get => numColor; }
+    public void AddCount(int zn = 1) { if (zn > 0) count += zn; }
+}
