@@ -133,15 +133,31 @@ public class LevelControl : MonoBehaviour
         //  подумать что делать если выпал цвет а таких плиток нет !!!
         if (modeSteps == 0 || modeSteps == 2) { currentCol1 = numCol; ui_Control.ViewCross(modeSteps, false); }
         if (modeSteps == 1 || modeSteps == 3) { currentCol2 = numCol; ui_Control.ViewCross(modeSteps, false); }
-        if (modeSteps == 3)
-        {
-            enemyLogic.GenerateNextStep(currentCol1, currentCol2, pole64);
-        }
+        SelectCurrentCol(numCol, true);
+        
         ui_Control.ViewBalls(modeSteps++, col);
         modeSteps %= 4;
-        SelectCurrentCol(numCol, true);
+        
         if ((modeSteps % 2) > 0) GetNextStep();
         else Invoke("DeactiveRndColors", 1f);
+        
+        if (modeSteps == 0 /*3*/)
+        {   //  попросить сделать ход Бота
+            //enemyLogic.GenerateNextStep(currentCol1, currentCol2, pole64);
+            if (enemyControl.StepBreak)
+            {   //  пропуск хода ?!
+                enemyControl.StepBreak = false;
+                currentCol1 = -1; ui_Control.ViewCross(2, true);
+                currentCol2 = -1; ui_Control.ViewCross(3, true);
+                OffAllTile();
+                GetNextStep();
+            }
+            else
+            {
+                enemyLogic.GenerateNextStep(currentCol1, currentCol2, pole64);
+            }
+        }
+
     }
 
     private void GetNextStep()
@@ -155,6 +171,7 @@ public class LevelControl : MonoBehaviour
     private void DeactiveRndColors()
     {
         rndColors.gameObject.SetActive(false);
+        //if ((modeSteps == 0)
     }
 
     private void SelectCurrentCol(int numCol, bool zn)
@@ -215,12 +232,12 @@ public class LevelControl : MonoBehaviour
         if (currentCol1 == -1 && currentCol2 == -1)
         {   //  ход БОТа сделан - теперь ход игрока
             OffAllTile();
-            Invoke("GetNextStep", 0.7f);
+            Invoke("GetNextStep", 0.8f);
             //GetNextStep();
         }
         else
         {
-            Invoke("BotNextStep", 0.6f);
+            Invoke("BotNextStep", 0.8f);
         }
     }
 
@@ -289,7 +306,7 @@ public class LevelControl : MonoBehaviour
                     if (currentCol1 == -1 && currentCol2 == -1)
                     {   //  ход игрока сделан - теперь ход БОТа
                         OffAllTile();
-                        Invoke("GetNextStep", 0.7f);
+                        Invoke("GetNextStep", 1f);
                         //GetNextStep();
                     }
                 }
@@ -361,6 +378,7 @@ public class LevelControl : MonoBehaviour
         {
             warior = enemyControl as IWarior;
         }
+        print($"cntColBalls => {cntColBalls[0]} {cntColBalls[1]} {cntColBalls[2]} {cntColBalls[3]} {cntColBalls[4]} {cntColBalls[5]} {cntColBalls[6]} {cntColBalls[7]}");
         for(int i = 0; i < 8; i++)
         {
             if (cntColBalls[i] > 0)
