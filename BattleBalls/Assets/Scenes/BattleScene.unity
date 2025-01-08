@@ -429,6 +429,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a7bd6749f197dc4bbf84df306832cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ui_Control: {fileID: 1960032453}
+  levelControl: {fileID: 922577156}
+  TmpImmunity: 0
+  Tmp2x: 0
+  StepBreak: 0
 --- !u!4 &76102379
 Transform:
   m_ObjectHideFlags: 0
@@ -1386,6 +1391,7 @@ MonoBehaviour:
   tailPrefab: {fileID: 357235560859097500, guid: e95f02409ea829241b57d15be85e7e52, type: 3}
   enemyControl: {fileID: 1392727346}
   enemyLogic: {fileID: 1392727348}
+  player: {fileID: 76102378}
 --- !u!4 &922577157
 Transform:
   m_ObjectHideFlags: 0

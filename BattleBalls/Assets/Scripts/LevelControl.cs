@@ -15,6 +15,8 @@ public class LevelControl : MonoBehaviour
     [SerializeField] private EnemyControl enemyControl;
     [SerializeField] private EnemyAI enemyLogic;
 
+    [SerializeField] private PlayerWarior player;
+
     private int modeSteps = 0;
     private int[] pole64;
     private GameObject[] poleGO;
@@ -31,7 +33,9 @@ public class LevelControl : MonoBehaviour
         rndPosR = new Vector3(6.5f, 1, -4);
         GeneratePole();
         GetNextStep();
-        enemyControl.SetParams(WariorParams.arrWariorParams[0]);
+        int numWarior = GameManager.Instance.currentPlayer.currentLevel;
+        if (numWarior > WariorParams.arrWariorParams.Length - 1) numWarior = WariorParams.arrWariorParams.Length - 1;
+        enemyControl.SetParams(WariorParams.arrWariorParams[numWarior]);
     }
 
     // Update is called once per frame
@@ -142,7 +146,8 @@ public class LevelControl : MonoBehaviour
         else Invoke("DeactiveRndColors", 1f);
         
         if (modeSteps == 0 /*3*/)
-        {   //  попросить сделать ход Бота
+        {   //  запретить игроку кликать по шарам
+            //  попросить сделать ход Бота
             //enemyLogic.GenerateNextStep(currentCol1, currentCol2, pole64);
             if (enemyControl.StepBreak)
             {   //  пропуск хода ?!
@@ -157,7 +162,10 @@ public class LevelControl : MonoBehaviour
                 enemyLogic.GenerateNextStep(currentCol1, currentCol2, pole64);
             }
         }
+        if (modeSteps == 2)
+        {   //  разрешить игроку кликать по шарам
 
+        }
     }
 
     private void GetNextStep()
@@ -369,42 +377,75 @@ public class LevelControl : MonoBehaviour
 
     private void UseBalls()
     {
-        IWarior warior = null;
+        IWarior warior = enemyControl as IWarior;
         if (modeSteps == 0)
-        {
-
-        }
-        if (modeSteps == 2)
-        {
-            warior = enemyControl as IWarior;
-        }
-        print($"cntColBalls => {cntColBalls[0]} {cntColBalls[1]} {cntColBalls[2]} {cntColBalls[3]} {cntColBalls[4]} {cntColBalls[5]} {cntColBalls[6]} {cntColBalls[7]}");
-        for(int i = 0; i < 8; i++)
-        {
-            if (cntColBalls[i] > 0)
+        {   //  ходил бот -> игроку урон  
+            for (int i = 0; i < 8; i++)
             {
-                switch(i)
+                if (cntColBalls[i] > 0)
                 {
-                    case 0: //  красный
-                        break;
-                    case 1: //  зелёный
-                        break;
-                    case 2: //  жёлтый
-                        break;
-                    case 3: //  синий
-                        break;
-                    case 4: //  бирюзовый (голубой)
-                        break;
-                    case 5: //  магента
-                        break;
-                    case 6: //  коричневый
-                        break;
-                    case 7: //  оранжевый
-                        warior.BallsEffect(cntColBalls[i], 7, 0);   //  proba
-                        break;
+                    switch (i)
+                    {
+                        case 0: //  красный
+                            player.BallsDamage(cntColBalls[i], 0, 0);
+                            warior.BallsEffect(cntColBalls[i], 0, 0);
+                            break;
+                        case 1: //  зелёный
+                            break;
+                        case 2: //  жёлтый
+                            break;
+                        case 3: //  синий
+                            break;
+                        case 4: //  бирюзовый (голубой)
+                            break;
+                        case 5: //  магента
+                            warior.BallsEffect(cntColBalls[i], 5, 0);
+                            break;
+                        case 6: //  коричневый
+                            break;
+                        case 7: //  оранжевый
+                            warior.BallsEffect(cntColBalls[i], 7, 0);   //  proba
+                            player.BallsDamage(cntColBalls[i], 7, 0);
+                            break;
+                    }
                 }
             }
         }
+        if (modeSteps == 2)
+        {   //  ходил игрок -> боту урон
+            //warior = enemyControl as IWarior;
+            for(int i = 0; i < 8; i++)
+            {
+                if (cntColBalls[i] > 0)
+                {
+                    switch(i)
+                    {
+                        case 0: //  красный
+                            player.BallsEffect(cntColBalls[i], 0, 0);
+                            warior.BallsDamage(cntColBalls[i], 0, 0);
+                            break;
+                        case 1: //  зелёный
+                            break;
+                        case 2: //  жёлтый
+                            break;
+                        case 3: //  синий
+                            break;
+                        case 4: //  бирюзовый (голубой)
+                            break;
+                        case 5: //  магента
+                            player.BallsEffect(cntColBalls[i], 5, 0);
+                            break;
+                        case 6: //  коричневый
+                            break;
+                        case 7: //  оранжевый
+                            player.BallsEffect(cntColBalls[i], 7, 0);
+                            warior.BallsDamage(cntColBalls[i], 7, 0);   //  proba
+                            break;
+                    }
+                }
+            }
+        }
+        print($"cntColBalls => {cntColBalls[0]} {cntColBalls[1]} {cntColBalls[2]} {cntColBalls[3]} {cntColBalls[4]} {cntColBalls[5]} {cntColBalls[6]} {cntColBalls[7]}");
         cntColBalls = null;
     }
 
