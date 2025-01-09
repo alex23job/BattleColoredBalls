@@ -53,7 +53,7 @@ public class EnemyControl : MonoBehaviour, IWarior
         ui_Control.ViewHp(CurrentHP, MaxHP, 2);
         if (currentHP == 0)
         {   //  бот убит !!!
-
+            levelControl.BotKilled();
         }
     }
 
@@ -146,10 +146,10 @@ public class EnemyControl : MonoBehaviour, IWarior
                 {
                     if ((Tmp2x & 0x02) != 0)
                     {
-                        zn *= 2; Tmp2x &= 0x02;
+                        znDmg *= 2; Tmp2x &= 0x02;
                     }
                     //ChangeHP(-zn);   //  proba
-                    if (rndPrc <= prc) StepsFire = 3;
+                    //if (rndPrc <= prc) StepsFire = 3;
                 }
                 TmpImmunity &= 0x01;
                 break;

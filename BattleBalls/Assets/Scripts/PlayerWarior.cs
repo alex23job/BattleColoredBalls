@@ -105,10 +105,10 @@ public class PlayerWarior : MonoBehaviour, IWarior
                 {
                     if ((Tmp2x & 0x02) != 0)
                     {
-                        zn *= 2; Tmp2x &= 0x02;
+                        znDmg *= 2; Tmp2x &= 0x02;
                     }
-                    ChangeHP(-zn);   //  proba
-                    if (rndPrc <= prc) StepsFire = 3;
+                    //ChangeHP(-zn);   //  proba
+                    //if (rndPrc <= prc) StepsFire = 3;
                 }
                 TmpImmunity &= 0x01;
                 break;
@@ -124,7 +124,7 @@ public class PlayerWarior : MonoBehaviour, IWarior
         ui_Control.ViewHp(CurrentHP, MaxHP, 1);
         if (currentHP == 0)
         {   //  игрок убит !!!
-
+            levelControl.PlayerKilled();
         }
     }
 

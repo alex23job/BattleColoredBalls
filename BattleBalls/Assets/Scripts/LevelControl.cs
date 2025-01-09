@@ -100,21 +100,19 @@ public class LevelControl : MonoBehaviour
         poleGO[numPos] = go;
     }
 
+    public void PlayerKilled()
+    {
+
+    }
+
+    public void BotKilled()
+    {
+        GameManager.Instance.currentPlayer.LevelComplete();
+    }
+
     private bool TestColorTails(int n, int c)
     {
         int x = n % 8, y = n / 8;
-        /*if (y < 7)
-        {
-            if (pole64[n + 8] == c) return false;
-            if ((x > 0) && (pole64[n + 7] == c)) return false;
-            if ((x < 7) && (pole64[n + 9] == c)) return false;
-        }
-        if (y > 0)
-        {
-            if (pole64[n - 8] == c) return false;
-            if ((x > 0) && (pole64[n - 9] == c)) return false;
-            if ((x < 7) && (pole64[n - 7] == c)) return false;
-        }*/
         if ((y > 0) && (pole64[n - 8] == c)) return false;
         if ((y < 7) && (pole64[n + 8] == c)) return false;
         if ((x > 0) && (pole64[n - 1] == c)) return false;
@@ -437,30 +435,38 @@ public class LevelControl : MonoBehaviour
                     switch(i)
                     {
                         case 0: //  красный
+                            GameManager.Instance.currentPlayer.countRed += cntColBalls[i];
                             player.BallsEffect(cntColBalls[i], 0, 0, out dmg);
                             warior.BallsDamage(cntColBalls[i], 0, 0);
                             break;
                         case 1: //  зелёный
+                            GameManager.Instance.currentPlayer.countGreen += cntColBalls[i];
                             player.BallsEffect(cntColBalls[i], 1, 0, out dmg);
                             warior.BallsDamage(dmg, 1, player.ToxinPercent);
                             break;
                         case 2: //  жёлтый
+                            GameManager.Instance.currentPlayer.countYellow += cntColBalls[i];
                             player.BallsEffect(cntColBalls[i], 2, 0, out dmg);
                             break;
                         case 3: //  синий
+                            GameManager.Instance.currentPlayer.countBlue += cntColBalls[i];
                             player.BallsEffect(cntColBalls[i], 3, 0, out dmg);
                             warior.BallsDamage(dmg, 3, player.ToxinPercent);
                             break;
                         case 4: //  бирюзовый (голубой)
+                            GameManager.Instance.currentPlayer.countCian += cntColBalls[i];
                             player.BallsEffect(cntColBalls[i], 4, 0, out dmg);
                             break;
                         case 5: //  магента
+                            GameManager.Instance.currentPlayer.countMagenta += cntColBalls[i];
                             player.BallsEffect(cntColBalls[i], 5, 0, out dmg);
                             break;
                         case 6: //  коричневый
+                            GameManager.Instance.currentPlayer.countBrown += cntColBalls[i];
                             player.BallsEffect(cntColBalls[i], 6, 0, out dmg);
                             break;
                         case 7: //  оранжевый
+                            GameManager.Instance.currentPlayer.countOrange += cntColBalls[i];
                             player.BallsEffect(cntColBalls[i], 7, 0, out dmg);
                             warior.BallsDamage(dmg, 7, 0);   //  proba
                             break;

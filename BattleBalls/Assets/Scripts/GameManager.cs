@@ -266,11 +266,11 @@ public class PlayerInfo
     public void LevelComplete()
     {
         //UpdateReward(currentLevel);
-        /*currentLevel++;
+        currentLevel++;
         if (currentLevel > maxLevel)
         {
             maxLevel = currentLevel;
-        }*/
+        }
         totalScore += currentScore;
     }
 
