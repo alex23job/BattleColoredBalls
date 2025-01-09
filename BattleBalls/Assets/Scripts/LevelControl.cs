@@ -410,6 +410,14 @@ public class LevelControl : MonoBehaviour
                     }
                 }
             }
+            if (warior.BonusLine > 0)
+            {   //  удалить случайную линию
+
+            }
+            if (warior.BonusRect > 0)
+            {   //  удалить случайный квадрат 4х4
+
+            }
         }
         if (modeSteps == 2)
         {   //  ходил игрок -> боту урон
@@ -446,7 +454,20 @@ public class LevelControl : MonoBehaviour
             }
         }
         print($"cntColBalls => {cntColBalls[0]} {cntColBalls[1]} {cntColBalls[2]} {cntColBalls[3]} {cntColBalls[4]} {cntColBalls[5]} {cntColBalls[6]} {cntColBalls[7]}");
+        warior.StepsEffect();
+        player.StepsEffect();
         cntColBalls = null;
+        if (modeSteps == 0)
+        {
+            if (warior.BonusLine > 0)
+            {   //  удалить случайную линию
+
+            }
+            if (warior.BonusRect > 0)
+            {   //  удалить случайный квадрат 4х4
+
+            }
+        }
     }
 
     private List<int> TestTotalTiles()
