@@ -396,19 +396,24 @@ public class LevelControl : MonoBehaviour
                             player.BallsDamage(dmg, 1, warior.ToxinPercent);
                             break;
                         case 2: //  жёлтый
+                            warior.BallsEffect(cntColBalls[i], 2, 0, out dmg);
                             break;
                         case 3: //  синий
+                            warior.BallsEffect(cntColBalls[i], 3, 0, out dmg);
+                            player.BallsDamage(dmg, 3, warior.ToxinPercent);
                             break;
                         case 4: //  бирюзовый (голубой)
+                            warior.BallsEffect(cntColBalls[i], 4, 0, out dmg);
                             break;
                         case 5: //  магента
                             warior.BallsEffect(cntColBalls[i], 5, 0, out dmg);
                             break;
                         case 6: //  коричневый
+                            warior.BallsEffect(cntColBalls[i], 6, 0, out dmg);
                             break;
                         case 7: //  оранжевый
                             warior.BallsEffect(cntColBalls[i], 7, 0, out dmg);   //  proba
-                            player.BallsDamage(cntColBalls[i], 7, 0);
+                            player.BallsDamage(dmg, 7, 0);
                             break;
                     }
                 }
@@ -440,15 +445,20 @@ public class LevelControl : MonoBehaviour
                             warior.BallsDamage(dmg, 1, player.ToxinPercent);
                             break;
                         case 2: //  жёлтый
+                            player.BallsEffect(cntColBalls[i], 2, 0, out dmg);
                             break;
                         case 3: //  синий
+                            player.BallsEffect(cntColBalls[i], 3, 0, out dmg);
+                            warior.BallsDamage(dmg, 3, player.ToxinPercent);
                             break;
                         case 4: //  бирюзовый (голубой)
+                            player.BallsEffect(cntColBalls[i], 4, 0, out dmg);
                             break;
                         case 5: //  магента
                             player.BallsEffect(cntColBalls[i], 5, 0, out dmg);
                             break;
                         case 6: //  коричневый
+                            player.BallsEffect(cntColBalls[i], 6, 0, out dmg);
                             break;
                         case 7: //  оранжевый
                             player.BallsEffect(cntColBalls[i], 7, 0, out dmg);

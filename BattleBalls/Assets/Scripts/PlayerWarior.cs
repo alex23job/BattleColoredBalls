@@ -72,16 +72,18 @@ public class PlayerWarior : MonoBehaviour, IWarior
                 if (zn == 3) { StepsFire = 0; StepsToxin = 0; }
                 if ((zn == 4) && (levelSpell == 2)) Tmp2x = 7;
                 if (zn == 5) StepBreak = true;
+                if (zn > 5)
+                { StepsFire = 0; StepsToxin = 0; Tmp2x = 7; StepBreak = true; }
                 break;
             case 3: //  синий
-                if (levelMagic == 2 && zn == 4) dmg = maxHP / 10;
-                if (levelMagic == 3 && zn == 5) dmg = maxHP / 4;
+                if (levelMagic == 2 && zn == 4) znDmg = maxHP / 10;
+                if (levelMagic == 3 && zn == 5) znDmg = maxHP / 4;
                 if ((Tmp2x & 0x01) != 0)
                 {
-                    dmg *= 2; Tmp2x &= 0x01;
+                    znDmg *= 2; Tmp2x &= 0x01;
                 }
-                if ((immunity != 3) || ((TmpImmunity & 1) != 0)) ChangeHP(-dmg);
-                TmpImmunity &= 0x02;
+                //if ((immunity != 3) || ((TmpImmunity & 1) != 0)) ChangeHP(-dmg);
+                //TmpImmunity &= 0x02;
                 break;
             case 4: //  бирюзовый (голубой)
                 TmpImmunity |= 1;
