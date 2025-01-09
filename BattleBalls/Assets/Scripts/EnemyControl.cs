@@ -87,10 +87,11 @@ public class EnemyControl : MonoBehaviour, IWarior
         ui_Control.ViewName(nameRu, 2);
     }
 
-    public void BallsEffect(int zn, int col, int prc)
+    public void BallsEffect(int zn, int col, int prc, out int znDmg)
     {
         int rndPrc = Random.Range(0, 101);
         int dmg = zn;
+        znDmg = zn;
         switch(col)
         {
             case 0: //  красный
@@ -98,15 +99,15 @@ public class EnemyControl : MonoBehaviour, IWarior
                 ChangeHP(zn);
                 break;
             case 1: //  зелёный
-                if (immunity != 2)
-                {
                     if ((Tmp2x & 0x04) != 0)
                     {
-                        zn *= 2;Tmp2x &= 0x04;
+                        znDmg *= 2;Tmp2x &= 0x04;
                     }
-                    ChangeHP(-zn);
+                /*if (immunity != 2)
+                {
+                    //ChangeHP(-zn);
                     if (rndPrc <= prc) StepsToxin = 3;
-                }
+                }*/
                 break;
             case 2: //  жёлтый
                 if (zn == 3) { StepsFire = 0; StepsToxin = 0; }
@@ -165,10 +166,6 @@ public class EnemyControl : MonoBehaviour, IWarior
             case 1: //  зелёный
                 if (immunity != 2)
                 {
-                    /*if ((Tmp2x & 0x04) != 0)
-                    {
-                        zn *= 2; Tmp2x &= 0x04;
-                    }*/
                     ChangeHP(-zn);
                     if (rndPrc <= prc) StepsToxin = 3;
                 }

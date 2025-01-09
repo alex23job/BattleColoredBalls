@@ -378,6 +378,7 @@ public class LevelControl : MonoBehaviour
     private void UseBalls()
     {
         IWarior warior = enemyControl as IWarior;
+        int dmg;
         if (modeSteps == 0)
         {   //  ходил бот -> игроку урон  
             for (int i = 0; i < 8; i++)
@@ -387,10 +388,12 @@ public class LevelControl : MonoBehaviour
                     switch (i)
                     {
                         case 0: //  красный
+                            warior.BallsEffect(cntColBalls[i], 0, 0, out dmg);
                             player.BallsDamage(cntColBalls[i], 0, 0);
-                            warior.BallsEffect(cntColBalls[i], 0, 0);
                             break;
                         case 1: //  зелёный
+                            warior.BallsEffect(cntColBalls[i], 1, 0, out dmg);
+                            player.BallsDamage(dmg, 1, warior.ToxinPercent);
                             break;
                         case 2: //  жёлтый
                             break;
@@ -399,12 +402,12 @@ public class LevelControl : MonoBehaviour
                         case 4: //  бирюзовый (голубой)
                             break;
                         case 5: //  магента
-                            warior.BallsEffect(cntColBalls[i], 5, 0);
+                            warior.BallsEffect(cntColBalls[i], 5, 0, out dmg);
                             break;
                         case 6: //  коричневый
                             break;
                         case 7: //  оранжевый
-                            warior.BallsEffect(cntColBalls[i], 7, 0);   //  proba
+                            warior.BallsEffect(cntColBalls[i], 7, 0, out dmg);   //  proba
                             player.BallsDamage(cntColBalls[i], 7, 0);
                             break;
                     }
@@ -429,10 +432,12 @@ public class LevelControl : MonoBehaviour
                     switch(i)
                     {
                         case 0: //  красный
-                            player.BallsEffect(cntColBalls[i], 0, 0);
+                            player.BallsEffect(cntColBalls[i], 0, 0, out dmg);
                             warior.BallsDamage(cntColBalls[i], 0, 0);
                             break;
                         case 1: //  зелёный
+                            player.BallsEffect(cntColBalls[i], 1, 0, out dmg);
+                            warior.BallsDamage(dmg, 1, player.ToxinPercent);
                             break;
                         case 2: //  жёлтый
                             break;
@@ -441,13 +446,13 @@ public class LevelControl : MonoBehaviour
                         case 4: //  бирюзовый (голубой)
                             break;
                         case 5: //  магента
-                            player.BallsEffect(cntColBalls[i], 5, 0);
+                            player.BallsEffect(cntColBalls[i], 5, 0, out dmg);
                             break;
                         case 6: //  коричневый
                             break;
                         case 7: //  оранжевый
-                            player.BallsEffect(cntColBalls[i], 7, 0);
-                            warior.BallsDamage(cntColBalls[i], 7, 0);   //  proba
+                            player.BallsEffect(cntColBalls[i], 7, 0, out dmg);
+                            warior.BallsDamage(dmg, 7, 0);   //  proba
                             break;
                     }
                 }

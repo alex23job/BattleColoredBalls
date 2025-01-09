@@ -28,7 +28,7 @@ namespace Assets.Scripts
 
         public void ChangeHP(int zn);
 
-        public void BallsEffect(int zn, int col, int prc);
+        public void BallsEffect(int zn, int col, int prc, out int dmg);
         public void BallsDamage(int zn, int col, int prc);
         public void StepsEffect();
     }
