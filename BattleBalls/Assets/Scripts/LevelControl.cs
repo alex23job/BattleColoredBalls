@@ -17,6 +17,10 @@ public class LevelControl : MonoBehaviour
 
     [SerializeField] private PlayerWarior player;
 
+    [SerializeField] private HeartControl heartControl;
+    [SerializeField] private MedicControl medicControl;
+    [SerializeField] private ToxinControl toxinControl;
+
     private int modeSteps = 0;
     private int[] pole64;
     private GameObject[] poleGO;
@@ -388,10 +392,12 @@ public class LevelControl : MonoBehaviour
                         case 0: //  красный
                             warior.BallsEffect(cntColBalls[i], 0, 0, out dmg);
                             player.BallsDamage(cntColBalls[i], 0, 0);
+                            heartControl.gameObject.SetActive(true); heartControl.MoveLR(); Invoke("HeartHide", 1f);
                             break;
                         case 1: //  зелёный
                             warior.BallsEffect(cntColBalls[i], 1, 0, out dmg);
                             player.BallsDamage(dmg, 1, warior.ToxinPercent);
+                            toxinControl.gameObject.SetActive(true); toxinControl.MoveToLeft(); Invoke("ToxinHide", 1f);
                             break;
                         case 2: //  жёлтый
                             warior.BallsEffect(cntColBalls[i], 2, 0, out dmg);
@@ -405,6 +411,7 @@ public class LevelControl : MonoBehaviour
                             break;
                         case 5: //  магента
                             warior.BallsEffect(cntColBalls[i], 5, 0, out dmg);
+                            medicControl.gameObject.SetActive(true); medicControl.MoveToRight(); Invoke("MedicHide", 1f);
                             break;
                         case 6: //  коричневый
                             warior.BallsEffect(cntColBalls[i], 6, 0, out dmg);
@@ -438,11 +445,13 @@ public class LevelControl : MonoBehaviour
                             GameManager.Instance.currentPlayer.countRed += cntColBalls[i];
                             player.BallsEffect(cntColBalls[i], 0, 0, out dmg);
                             warior.BallsDamage(cntColBalls[i], 0, 0);
+                            heartControl.gameObject.SetActive(true); heartControl.MoveRL(); Invoke("HeartHide", 1f);
                             break;
                         case 1: //  зелёный
                             GameManager.Instance.currentPlayer.countGreen += cntColBalls[i];
                             player.BallsEffect(cntColBalls[i], 1, 0, out dmg);
                             warior.BallsDamage(dmg, 1, player.ToxinPercent);
+                            toxinControl.gameObject.SetActive(true); toxinControl.MoveToRight(); Invoke("ToxinHide", 1f);
                             break;
                         case 2: //  жёлтый
                             GameManager.Instance.currentPlayer.countYellow += cntColBalls[i];
@@ -460,6 +469,7 @@ public class LevelControl : MonoBehaviour
                         case 5: //  магента
                             GameManager.Instance.currentPlayer.countMagenta += cntColBalls[i];
                             player.BallsEffect(cntColBalls[i], 5, 0, out dmg);
+                            medicControl.gameObject.SetActive(true); medicControl.MoveToLeft(); Invoke("MedicHide", 1f);
                             break;
                         case 6: //  коричневый
                             GameManager.Instance.currentPlayer.countBrown += cntColBalls[i];
@@ -489,6 +499,21 @@ public class LevelControl : MonoBehaviour
 
             }
         }
+    }
+
+    private void HeartHide()
+    {
+        heartControl.gameObject.SetActive(false);
+    }
+
+    private void MedicHide()
+    {
+        medicControl.gameObject.SetActive(false);
+    }
+
+    private void ToxinHide()
+    {
+        toxinControl.gameObject.SetActive(false);
     }
 
     private List<int> TestTotalTiles()
