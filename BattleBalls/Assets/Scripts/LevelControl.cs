@@ -20,6 +20,8 @@ public class LevelControl : MonoBehaviour
     [SerializeField] private HeartControl heartControl;
     [SerializeField] private MedicControl medicControl;
     [SerializeField] private ToxinControl toxinControl;
+    [SerializeField] private BallsEffect magicEffect;
+    [SerializeField] private BallsEffect fireEffect;
 
     private int modeSteps = 0;
     private int[] pole64;
@@ -405,6 +407,7 @@ public class LevelControl : MonoBehaviour
                         case 3: //  синий
                             warior.BallsEffect(cntColBalls[i], 3, 0, out dmg);
                             player.BallsDamage(dmg, 3, warior.ToxinPercent);
+                            magicEffect.gameObject.SetActive(true); magicEffect.MoveToLeft(); Invoke("MagicHide", 1f);
                             break;
                         case 4: //  бирюзовый (голубой)
                             warior.BallsEffect(cntColBalls[i], 4, 0, out dmg);
@@ -461,6 +464,7 @@ public class LevelControl : MonoBehaviour
                             GameManager.Instance.currentPlayer.countBlue += cntColBalls[i];
                             player.BallsEffect(cntColBalls[i], 3, 0, out dmg);
                             warior.BallsDamage(dmg, 3, player.ToxinPercent);
+                            magicEffect.gameObject.SetActive(true); magicEffect.MoveToRight(); Invoke("MagicHide", 1f);
                             break;
                         case 4: //  бирюзовый (голубой)
                             GameManager.Instance.currentPlayer.countCian += cntColBalls[i];
@@ -514,6 +518,11 @@ public class LevelControl : MonoBehaviour
     private void ToxinHide()
     {
         toxinControl.gameObject.SetActive(false);
+    }
+
+    private void MagicHide()
+    {
+        magicEffect.gameObject.SetActive(false);
     }
 
     private List<int> TestTotalTiles()

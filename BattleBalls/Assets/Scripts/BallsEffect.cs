@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToxinControl : MonoBehaviour
+public class BallsEffect : MonoBehaviour
 {
     private Animator anim;
-    private ParticleSystem toxinEmpl;
+    private ParticleSystem ballEmpl;
     private void Awake()
     {
         anim = transform.GetChild(0).GetComponent<Animator>();
-        toxinEmpl = transform.GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
+        ballEmpl = transform.GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
     }
     // Start is called before the first frame update
     void Start()
@@ -20,12 +20,12 @@ public class ToxinControl : MonoBehaviour
     public void MoveToRight()
     {
         anim.Play("ToRight");
-        toxinEmpl.Play();
+        ballEmpl.Play();
     }
 
     public void MoveToLeft()
     {
         anim.Play("ToLeft");
-        toxinEmpl.Play();
+        ballEmpl.Play();
     }
 }
