@@ -1531,7 +1531,7 @@ MonoBehaviour:
   medicControl: {fileID: 2316407362271434682}
   toxinControl: {fileID: 1958331592389889023}
   magicEffect: {fileID: 9060898983437110733}
-  fireEffect: {fileID: 0}
+  fireEffect: {fileID: 5775038282181890072}
 --- !u!4 &922577157
 Transform:
   m_ObjectHideFlags: 0
@@ -3291,6 +3291,78 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f546c01eb9f5944489853a796e0376d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &5775038282181890071
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 102551864034460978, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 102551864034460978, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 102551864034460978, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 102551864034460978, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 102551864034460978, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 102551864034460978, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 102551864034460978, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 102551864034460978, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 102551864034460978, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 102551864034460978, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 668410515177129790, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+      propertyPath: m_Name
+      value: FireBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 668410515177129790, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+--- !u!114 &5775038282181890072 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4499155957054602054, guid: 41e43515e79355343b4198cd643c4dca, type: 3}
+  m_PrefabInstance: {fileID: 5775038282181890071}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a56d03d9acabdf408d4f6133df7754a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6835118125630962917
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3462,3 +3534,4 @@ SceneRoots:
   - {fileID: 2316407362271434681}
   - {fileID: 1958331592389889022}
   - {fileID: 9060898983437110732}
+  - {fileID: 5775038282181890071}

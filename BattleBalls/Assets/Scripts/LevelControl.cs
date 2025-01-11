@@ -422,6 +422,7 @@ public class LevelControl : MonoBehaviour
                         case 7: //  оранжевый
                             warior.BallsEffect(cntColBalls[i], 7, 0, out dmg);   //  proba
                             player.BallsDamage(dmg, 7, 0);
+                            fireEffect.gameObject.SetActive(true); fireEffect.MoveToLeft(); Invoke("FireHide", 1f);
                             break;
                     }
                 }
@@ -483,6 +484,7 @@ public class LevelControl : MonoBehaviour
                             GameManager.Instance.currentPlayer.countOrange += cntColBalls[i];
                             player.BallsEffect(cntColBalls[i], 7, 0, out dmg);
                             warior.BallsDamage(dmg, 7, 0);   //  proba
+                            fireEffect.gameObject.SetActive(true); fireEffect.MoveToRight(); Invoke("FireHide", 1f);
                             break;
                     }
                 }
@@ -523,6 +525,11 @@ public class LevelControl : MonoBehaviour
     private void MagicHide()
     {
         magicEffect.gameObject.SetActive(false);
+    }
+
+    private void FireHide()
+    {
+        fireEffect.gameObject.SetActive(false);
     }
 
     private List<int> TestTotalTiles()
