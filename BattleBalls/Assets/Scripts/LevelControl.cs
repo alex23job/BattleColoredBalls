@@ -44,6 +44,13 @@ public class LevelControl : MonoBehaviour
         enemyControl.SetParams(WariorParams.arrWariorParams[numWarior]);
         ui_Control.ViewBonus(0, 3); ui_Control.ViewBonus(0, 4); //  у Бота нет бонусов
         ui_Control.ViewBonus(0, 1); ui_Control.ViewBonus(0, 2); //  у Игрока могут быть купленные бонусы
+        switch (enemyControl.Immunity)
+        {
+            case 1: ui_Control.ViewImm(true, 4); break;
+            case 2: ui_Control.ViewImm(true, 5); break;
+            case 3: ui_Control.ViewImm(true, 6); break;
+            case 4: ui_Control.ViewImm(true, 7); break;
+        }
     }
 
     // Update is called once per frame

@@ -4951,11 +4951,28 @@ MonoBehaviour:
   txtBotName: {fileID: 552285389}
   txtPlHp: {fileID: 674102148}
   txtBotHp: {fileID: 1728031459}
-  txtBotLine: {fileID: 0}
-  txtBotRect: {fileID: 0}
-  txtPlLine: {fileID: 0}
-  txtPlRect: {fileID: 0}
-  arBonusBtn: []
+  txtBotLine: {fileID: 2014080059}
+  txtBotRect: {fileID: 1810221042}
+  txtPlLine: {fileID: 2069697771}
+  txtPlRect: {fileID: 1605215818}
+  arBonusBtn:
+  - {fileID: 1836656059}
+  - {fileID: 1497937273}
+  - {fileID: 523447746}
+  - {fileID: 626193411}
+  - {fileID: 2075895962}
+  - {fileID: 409798262}
+  sprYes: {fileID: 21300000, guid: f526ab3a4194eaa45a2d1a9a88912a66, type: 3}
+  sprNo: {fileID: 21300000, guid: 9b8873aa10a0d2141907db132563fd67, type: 3}
+  arImgImmunity:
+  - {fileID: 120273576}
+  - {fileID: 1872415996}
+  - {fileID: 787107329}
+  - {fileID: 1271504396}
+  - {fileID: 787467712}
+  - {fileID: 1851007846}
+  - {fileID: 853876010}
+  - {fileID: 1262773807}
 --- !u!114 &1960032454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5588,11 +5605,11 @@ RectTransform:
   - {fileID: 101981276}
   - {fileID: 674102147}
   - {fileID: 1451554927}
-  - {fileID: 1497937272}
   - {fileID: 2069697770}
   - {fileID: 1605215817}
-  - {fileID: 523447745}
+  - {fileID: 1497937272}
   - {fileID: 1836656058}
+  - {fileID: 523447745}
   - {fileID: 2008228280}
   - {fileID: 1324861840}
   - {fileID: 120273575}

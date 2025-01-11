@@ -27,10 +27,15 @@ public class UI_control : MonoBehaviour
     [SerializeField] private Text txtPlRect;
     [SerializeField] private Button[] arBonusBtn;
 
+    [SerializeField] private Sprite sprYes;
+    [SerializeField] private Sprite sprNo;
+    [SerializeField] private Image[] arImgImmunity;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        int i;
+        for (i = 0; i < 8; i++) arImgImmunity[i].sprite = sprNo;
     }
 
     // Update is called once per frame
@@ -126,18 +131,20 @@ public class UI_control : MonoBehaviour
             case 1:
                 txtPlLine.text = zn.ToString();
                 arBonusBtn[0].interactable = zn > 0;
+                arBonusBtn[1].interactable = zn > 0;
                 break;
             case 2:
                 txtPlRect.text = zn.ToString();
-                arBonusBtn[1].interactable = zn > 0;
+                arBonusBtn[2].interactable = zn > 0;
                 break;
             case 3:
                 txtBotLine.text = zn.ToString();
-                arBonusBtn[2].interactable = zn > 0;
+                arBonusBtn[3].interactable = zn > 0;
+                arBonusBtn[4].interactable = zn > 0;
                 break;
             case 4:
                 txtBotRect.text = zn.ToString();
-                arBonusBtn[3].interactable = zn > 0;
+                arBonusBtn[5].interactable = zn > 0;
                 break;
         }
     }
@@ -145,5 +152,15 @@ public class UI_control : MonoBehaviour
     public void ViewExp(int zn)
     {
 
+    }
+
+    /// <summary>
+    /// Отображение иммунитетов игрока и бота
+    /// </summary>
+    /// <param name="zn">есть или нет</param>
+    /// <param name="mode">Отчего у кого: Pl 0 - r, 1 - g, 2 - b, 3 - or, Bot 4 - r, 5 - g, 6 - b, 7 - or</param>
+    public void ViewImm(bool zn, int mode)
+    {
+        if ((mode >= 0) && (mode < 8)) arImgImmunity[mode].sprite = (zn == true) ? sprYes : sprNo;
     }
 }

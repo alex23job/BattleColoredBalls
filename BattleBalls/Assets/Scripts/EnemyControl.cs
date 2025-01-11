@@ -184,7 +184,7 @@ public class EnemyControl : MonoBehaviour, IWarior
                 {
                     dmg *= 2; Tmp2x &= 0x01;
                 }*/
-                if ((immunity != 3) || ((TmpImmunity & 1) != 0)) ChangeHP(-dmg);
+                if ((immunity != 3) && ((TmpImmunity & 1) == 0)) ChangeHP(-dmg);
                 TmpImmunity &= 0x02;
                 break;
             case 4: //  бирюзовый (голубой)
@@ -203,7 +203,7 @@ public class EnemyControl : MonoBehaviour, IWarior
                 if (levelBrown == 3) BonusRect++;*/
                 break;
             case 7: //  оранжевый
-                if (immunity != 4 || ((TmpImmunity & 2) != 0))
+                if ((immunity != 4) && ((TmpImmunity & 2) == 0))
                 {
                     /*if ((Tmp2x & 0x02) != 0)
                     {
@@ -241,5 +241,9 @@ public class EnemyControl : MonoBehaviour, IWarior
             ui_Control.ViewBonus(BonusLine, 3);
         }
         StepBreak = false;
+        ui_Control.ViewImm((TmpImmunity & 0x01) != 0, 6);
+        ui_Control.ViewImm((TmpImmunity & 0x02) != 0, 7);
+        if (((TmpImmunity & 0x01) == 0) && (Immunity != 3)) ui_Control.ViewImm(false, 6);
+        if (((TmpImmunity & 0x02) == 0) && (Immunity != 4)) ui_Control.ViewImm(false, 7);
     }
 }
