@@ -42,6 +42,8 @@ public class LevelControl : MonoBehaviour
         int numWarior = GameManager.Instance.currentPlayer.currentLevel;
         if (numWarior > WariorParams.arrWariorParams.Length - 1) numWarior = WariorParams.arrWariorParams.Length - 1;
         enemyControl.SetParams(WariorParams.arrWariorParams[numWarior]);
+        ui_Control.ViewBonus(0, 3); ui_Control.ViewBonus(0, 4); //  у Бота нет бонусов
+        ui_Control.ViewBonus(0, 1); ui_Control.ViewBonus(0, 2); //  у Игрока могут быть купленные бонусы
     }
 
     // Update is called once per frame
@@ -494,7 +496,7 @@ public class LevelControl : MonoBehaviour
         warior.StepsEffect();
         player.StepsEffect();
         cntColBalls = null;
-        if (modeSteps == 0)
+        /*if (modeSteps == 0)
         {
             if (warior.BonusLine > 0)
             {   //  удалить случайную линию
@@ -504,7 +506,7 @@ public class LevelControl : MonoBehaviour
             {   //  удалить случайный квадрат 4х4
 
             }
-        }
+        }*/
     }
 
     private void HeartHide()

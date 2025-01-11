@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Button[] levelButtons;
+
+    [SerializeField] private Text txtGold;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,5 +33,10 @@ public class MainMenu : MonoBehaviour
         {
             levelButtons[i].interactable = (i + 1) <= maxLevel;
         }
+    }
+
+    public void ViewGold()
+    {
+        txtGold.text = GameManager.Instance.currentPlayer.totalGold.ToString();
     }
 }

@@ -15,8 +15,17 @@ public class UI_control : MonoBehaviour
     [SerializeField] private Image crossBotRight;
     [SerializeField] private Image playerHP;
     [SerializeField] private Image botHP;
+    
     [SerializeField] private Text txtPlName;
     [SerializeField] private Text txtBotName;
+    [SerializeField] private Text txtPlHp;
+    [SerializeField] private Text txtBotHp;
+
+    [SerializeField] private Text txtBotLine;
+    [SerializeField] private Text txtBotRect;
+    [SerializeField] private Text txtPlLine;
+    [SerializeField] private Text txtPlRect;
+    [SerializeField] private Button[] arBonusBtn;
 
     // Start is called before the first frame update
     void Start()
@@ -79,10 +88,12 @@ public class UI_control : MonoBehaviour
         if (mode == 1)  //  player
         {
             playerHP.fillAmount = (float)hp / (float)maxHP;
+            txtPlHp.text = hp.ToString();
         }
         if (mode == 2)  //  bot
         {
             botHP.fillAmount = (float)hp / (float)maxHP;
+            txtBotHp.text = hp.ToString();
         }
     }
 
@@ -101,5 +112,38 @@ public class UI_control : MonoBehaviour
         {
             txtBotName.text = nm;
         }
+    }
+
+    /// <summary>
+    /// Отображение количества бонусов игрока или бота
+    /// </summary>
+    /// <param name="zn">количество бонусов</param>
+    /// <param name="mode">Где выводим: 1 - line Pl, 2 - rect Pl, 3 - line Bot, 4 - rect Bot</param>
+    public void ViewBonus(int zn, int mode)
+    {
+        switch(mode)
+        {
+            case 1:
+                txtPlLine.text = zn.ToString();
+                arBonusBtn[0].interactable = zn > 0;
+                break;
+            case 2:
+                txtPlRect.text = zn.ToString();
+                arBonusBtn[1].interactable = zn > 0;
+                break;
+            case 3:
+                txtBotLine.text = zn.ToString();
+                arBonusBtn[2].interactable = zn > 0;
+                break;
+            case 4:
+                txtBotRect.text = zn.ToString();
+                arBonusBtn[3].interactable = zn > 0;
+                break;
+        }
+    }
+
+    public void ViewExp(int zn)
+    {
+
     }
 }

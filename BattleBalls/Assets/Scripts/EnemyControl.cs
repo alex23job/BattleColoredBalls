@@ -129,7 +129,7 @@ public class EnemyControl : MonoBehaviour, IWarior
             case 4: //  бирюзовый (голубой)
                 TmpImmunity |= 1;
                 if ((levelCian == 2) && (zn == 4)) Tmp2x |= 0x02;
-                if (levelCian == 3) BonusLine++;
+                if (levelCian == 3) { BonusLine++; ui_Control.ViewBonus(BonusLine, 3); }
                 break;
             case 5: //  магента - лечение
                 if (levelHealing == 2) dmg = maxHP / 10;
@@ -139,20 +139,20 @@ public class EnemyControl : MonoBehaviour, IWarior
             case 6: //  коричневый
                 TmpImmunity |= 2;
                 if (levelBrown == 2 && zn == 4) Tmp2x |= 0x01;
-                if (levelBrown == 3) BonusRect++;
+                if (levelBrown == 3) { BonusRect++; ui_Control.ViewBonus(BonusRect, 4); }
                 break;
             case 7: //  оранжевый
-                if (immunity != 4 || ((TmpImmunity & 2) != 0))
+                if ((Tmp2x & 0x02) != 0)
                 {
-                    if ((Tmp2x & 0x02) != 0)
-                    {
-                        znDmg *= 2; Tmp2x &= 0x02;
-                    }
+                    znDmg *= 2; Tmp2x &= 0x02;
+                }
+               //if (immunity != 4 || ((TmpImmunity & 2) != 0))
+               //{
                     //ChangeHP(-zn);   //  proba
                     //if (rndPrc <= prc) StepsFire = 3;
-                }
-                TmpImmunity &= 0x01;
-                break;
+               //}
+               //TmpImmunity &= 0x01;
+               break;
         }
     }
 
@@ -233,10 +233,12 @@ public class EnemyControl : MonoBehaviour, IWarior
         if (BonusRect > 0)
         {   
             BonusRect = 0;
+            ui_Control.ViewBonus(BonusRect, 4);
         }
         if (BonusLine > 0)
         {
             BonusLine = 0;
+            ui_Control.ViewBonus(BonusLine, 3);
         }
         StepBreak = false;
     }

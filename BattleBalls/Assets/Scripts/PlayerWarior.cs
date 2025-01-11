@@ -88,7 +88,7 @@ public class PlayerWarior : MonoBehaviour, IWarior
             case 4: //  бирюзовый (голубой)
                 TmpImmunity |= 1;
                 if ((levelCian == 2) && (zn == 4)) Tmp2x |= 0x02;
-                if (levelCian == 3) BonusLine++;
+                if (levelCian == 3) { BonusLine++; GameManager.Instance.currentPlayer.countBonusLine++; ui_Control.ViewBonus(BonusLine, 1); }
                 break;
             case 5: //  магента - лечение
                 if (levelHealing == 2) dmg = maxHP / 10;
@@ -98,19 +98,13 @@ public class PlayerWarior : MonoBehaviour, IWarior
             case 6: //  коричневый
                 TmpImmunity |= 2;
                 if (levelBrown == 2 && zn == 4) Tmp2x |= 0x01;
-                if (levelBrown == 3) BonusRect++;
+                if (levelBrown == 3) { BonusRect++; GameManager.Instance.currentPlayer.countBonusRect++; ui_Control.ViewBonus(BonusRect, 2); }
                 break;
             case 7: //  оранжевый
-                if (immunity != 4 || ((TmpImmunity & 2) != 0))
+                if ((Tmp2x & 0x02) != 0)
                 {
-                    if ((Tmp2x & 0x02) != 0)
-                    {
-                        znDmg *= 2; Tmp2x &= 0x02;
-                    }
-                    //ChangeHP(-zn);   //  proba
-                    //if (rndPrc <= prc) StepsFire = 3;
+                    znDmg *= 2; Tmp2x &= 0x02;
                 }
-                TmpImmunity &= 0x01;
                 break;
         }
     }
@@ -164,6 +158,9 @@ public class PlayerWarior : MonoBehaviour, IWarior
 
         if (GameManager.Instance.currentPlayer.countBrown >= 2000) levelBrown = 2;
         if (GameManager.Instance.currentPlayer.countBrown >= 5000) levelBrown = 3;
+
+        ui_Control.ViewBonus(GameManager.Instance.currentPlayer.countBonusLine, 1);
+        ui_Control.ViewBonus(GameManager.Instance.currentPlayer.countBonusRect, 2);
     }
 
     public void BallsDamage(int zn, int col, int prc)

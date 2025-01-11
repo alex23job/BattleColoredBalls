@@ -99,6 +99,7 @@ public class GameManager : MonoBehaviour
             if (mm_control != null)
             {
                 mm_control.InterableLevelButtons(GameManager.Instance.currentPlayer.maxLevel);
+                mm_control.ViewGold();
                 //mm_control.OnPoleSelect(GameManager.Instance.currentPlayer.currentPole);
                 //mm_control.OnModeSelect(GameManager.Instance.currentPlayer.currentMode);
 
@@ -114,6 +115,9 @@ public class GameManager : MonoBehaviour
         GameManager.Instance.currentPlayer.maxLevel = data.maxLvl;
         GameManager.Instance.currentPlayer.currentMode = data.oldMode;
         GameManager.Instance.currentPlayer.totalScore = data.score;
+        GameManager.Instance.currentPlayer.totalGold = data.gold;
+        GameManager.Instance.currentPlayer.countBonusLine = data.bonusLine;
+        GameManager.Instance.currentPlayer.countBonusRect = data.bonusRect;
 
         GameManager.Instance.currentPlayer.countRed = data.cntRed;
         GameManager.Instance.currentPlayer.countGreen = data.cntGreen;
@@ -137,6 +141,7 @@ public class GameManager : MonoBehaviour
         if (mm_control != null)
         {
             mm_control.InterableLevelButtons(GameManager.Instance.currentPlayer.maxLevel);
+            mm_control.ViewGold();
             //mm_control.OnPoleSelect(GameManager.Instance.currentPlayer.currentPole);
             //mm_control.OnModeSelect(GameManager.Instance.currentPlayer.currentMode);
             //mm_control.ViewScore();
@@ -155,6 +160,10 @@ public class GameManager : MonoBehaviour
 
         data.score = GameManager.Instance.currentPlayer.totalScore;
         data.maxLvl = GameManager.Instance.currentPlayer.maxLevel;
+        data.gold = GameManager.Instance.currentPlayer.totalGold;
+        data.bonusLine = GameManager.Instance.currentPlayer.countBonusLine;
+        data.bonusRect = GameManager.Instance.currentPlayer.countBonusRect;
+
         data.cntRed = GameManager.Instance.currentPlayer.countRed;
         data.cntGreen = GameManager.Instance.currentPlayer.countGreen;
         data.cntYellow = GameManager.Instance.currentPlayer.countYellow;
@@ -194,6 +203,7 @@ public class PlayerInfo
     public int totalScore = 0;
     public int currentScore = 0;
     public int currentMode = 0;
+    public int totalGold = 0;
 
     public int currentLevel = 1;
     public int maxLevel = 1;
@@ -206,6 +216,9 @@ public class PlayerInfo
     public int countMagenta = 0;
     public int countBrown = 0;
     public int countOrange = 0;
+
+    public int countBonusLine = 0;
+    public int countBonusRect = 0;
 
 
     /*public int currentPole = 0;
@@ -356,6 +369,9 @@ public class SaveData
     public int maxLvl = 1;
     public int score = 0;
     public int gold = 0;
+    public int bonusLine = 0;
+    public int bonusRect = 0;
+
     public int cntRed = 0;
     public int cntGreen = 0;
     public int cntYellow = 0;
