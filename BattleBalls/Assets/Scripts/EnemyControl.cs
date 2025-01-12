@@ -7,6 +7,7 @@ public class EnemyControl : MonoBehaviour, IWarior
 {
     [SerializeField] private UI_control ui_Control;
     [SerializeField] private LevelControl levelControl;
+    [SerializeField] private UI_Panel panel;
 
     private string nameRu;
     private string nameEn;
@@ -170,6 +171,7 @@ public class EnemyControl : MonoBehaviour, IWarior
                 {
                     ChangeHP(-zn);
                     if (rndPrc <= prc) StepsToxin = 3;
+                    //StepsToxin = 3; //  proba
                 }
                 break;
             case 2: //  æ¸ëòûé
@@ -211,6 +213,7 @@ public class EnemyControl : MonoBehaviour, IWarior
                     }*/
                     ChangeHP(-zn);   //  proba
                     if (rndPrc <= prc) StepsFire = 3;
+                    //StepsFire = 3;  //  proba
                 }
                 TmpImmunity &= 0x01;
                 break;
@@ -245,5 +248,11 @@ public class EnemyControl : MonoBehaviour, IWarior
         ui_Control.ViewImm((TmpImmunity & 0x02) != 0, 7);
         if (((TmpImmunity & 0x01) == 0) && (Immunity != 3)) ui_Control.ViewImm(false, 6);
         if (((TmpImmunity & 0x02) == 0) && (Immunity != 4)) ui_Control.ViewImm(false, 7);
+
+        panel.ViewStepToxin(StepsToxin);
+        panel.ViewStepFire(StepsFire);
+
+        panel.View2xFire((Tmp2x & 0x02) != 0);
+        panel.View2xMagic((Tmp2x & 0x01) != 0);
     }
 }
