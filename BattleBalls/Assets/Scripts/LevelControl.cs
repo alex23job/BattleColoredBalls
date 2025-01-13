@@ -51,6 +51,7 @@ public class LevelControl : MonoBehaviour
             case 3: ui_Control.ViewImm(true, 6); break;
             case 4: ui_Control.ViewImm(true, 7); break;
         }
+        ui_Control.ViewName(GameManager.Instance.currentPlayer.playerName, 1);
     }
 
     // Update is called once per frame
