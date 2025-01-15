@@ -51,6 +51,8 @@ public class PlayerWarior : MonoBehaviour, IWarior
 
     public void BallsEffect(int zn, int col, int prc, out int znDmg)
     {
+        GameManager.Instance.currentPlayer.currentScore += zn;
+        ui_Control.ViewScore(1, GameManager.Instance.currentPlayer.currentScore);
         int rndPrc = Random.Range(0, 101);
         int dmg = zn;
         znDmg = zn;

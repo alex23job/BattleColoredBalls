@@ -10,6 +10,8 @@ public class EnemyControl : MonoBehaviour, IWarior
     [SerializeField] private UI_Panel panel;
     [SerializeField] private InfoPanelControl infoPanel;
 
+    private int currentScore = 0;
+
     private string nameRu;
     private string nameEn;
     private int currentHP;
@@ -91,6 +93,8 @@ public class EnemyControl : MonoBehaviour, IWarior
 
     public void BallsEffect(int zn, int col, int prc, out int znDmg)
     {
+        currentScore += zn;
+        ui_Control.ViewScore(2, currentScore);
         int rndPrc = Random.Range(0, 101);
         int dmg = zn;
         znDmg = zn;

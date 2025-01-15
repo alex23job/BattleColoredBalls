@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class LevelControl : MonoBehaviour
 {
+    [SerializeField] private GameObject infoPanelPlayer;
+    [SerializeField] private GameObject infoPanelBot;
     [SerializeField] private RndColorsControl rndColors;
     [SerializeField] private UI_control ui_Control;
 
@@ -184,8 +186,8 @@ public class LevelControl : MonoBehaviour
 
     private void GetNextStep()
     {
-        if (modeSteps == 0) rndColors.transform.position = rndPosL;
-        if (modeSteps == 2) rndColors.transform.position = rndPosR;
+        if (modeSteps == 0) { rndColors.transform.position = rndPosL; infoPanelPlayer.SetActive(false); }
+        if (modeSteps == 2) { rndColors.transform.position = rndPosR; infoPanelBot.SetActive(false); }
         rndColors.gameObject.SetActive(true);
         rndColors.SetCast();
     }
@@ -193,6 +195,8 @@ public class LevelControl : MonoBehaviour
     private void DeactiveRndColors()
     {
         rndColors.gameObject.SetActive(false);
+        if (modeSteps == 2) { infoPanelPlayer.SetActive(true); }
+        if (modeSteps == 0) { infoPanelBot.SetActive(true); }
         //if ((modeSteps == 0)
     }
 
