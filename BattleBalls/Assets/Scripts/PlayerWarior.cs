@@ -8,6 +8,7 @@ public class PlayerWarior : MonoBehaviour, IWarior
     [SerializeField] private UI_control ui_Control;
     [SerializeField] private LevelControl levelControl;
     [SerializeField] private UI_Panel panel;
+    [SerializeField] private InfoPanelControl infoPanel;
 
     private string nameRu;
     private string nameEn;
@@ -57,6 +58,7 @@ public class PlayerWarior : MonoBehaviour, IWarior
         {
             case 0: //  красный
                 ChangeHP(zn);
+                infoPanel.AddStepInfo(RndColorsControl.GetColor(0), $"+{zn}");
                 break;
             case 1: //  зелёный
                     if ((Tmp2x & 0x04) != 0)
@@ -81,7 +83,7 @@ public class PlayerWarior : MonoBehaviour, IWarior
                 if (levelMagic == 3 && zn == 5) znDmg = maxHP / 4;
                 if ((Tmp2x & 0x01) != 0)
                 {
-                    znDmg *= 2; Tmp2x &= 0x01;
+                    znDmg *= 2; Tmp2x ^= 0x01;
                 }
                 //if ((immunity != 3) || ((TmpImmunity & 1) != 0)) ChangeHP(-dmg);
                 //TmpImmunity &= 0x02;
@@ -95,6 +97,7 @@ public class PlayerWarior : MonoBehaviour, IWarior
                 if (levelHealing == 2) dmg = maxHP / 10;
                 if (levelHealing == 3) dmg = maxHP / 4;
                 ChangeHP(dmg);
+                infoPanel.AddStepInfo(RndColorsControl.GetColor(5), $"+{dmg}");
                 break;
             case 6: //  коричневый
                 TmpImmunity |= 2;
@@ -104,7 +107,7 @@ public class PlayerWarior : MonoBehaviour, IWarior
             case 7: //  оранжевый
                 if ((Tmp2x & 0x02) != 0)
                 {
-                    znDmg *= 2; Tmp2x &= 0x02;
+                    znDmg *= 2; Tmp2x ^= 0x02;
                 }
                 break;
         }
@@ -172,12 +175,15 @@ public class PlayerWarior : MonoBehaviour, IWarior
         {
             case 0: //  красный
                 if (immunity != 1) ChangeHP(-zn);
+                infoPanel.AddStepInfo(RndColorsControl.GetColor(0), $"-{zn}");
                 break;
             case 1: //  зелёный
                 if (immunity != 2)
                 {
                     ChangeHP(-zn);
                     if (rndPrc <= prc) StepsToxin = 3;
+                    string descr = $"-{zn}" + ((StepsToxin == 3) ? $"  *{StepsToxin}" : "");
+                    infoPanel.AddStepInfo(RndColorsControl.GetColor(1), descr);
                 }
                 break;
             case 2: //  жёлтый
@@ -185,6 +191,7 @@ public class PlayerWarior : MonoBehaviour, IWarior
             case 3: //  синий
                 if ((immunity != 3) && ((TmpImmunity & 1) == 0)) ChangeHP(-dmg);
                 TmpImmunity &= 0x02;
+                infoPanel.AddStepInfo(RndColorsControl.GetColor(3), $"-{dmg}");
                 break;
             case 4: //  бирюзовый (голубой)
                 break;
@@ -197,6 +204,8 @@ public class PlayerWarior : MonoBehaviour, IWarior
                 {
                     ChangeHP(-zn);   //  proba
                     if (rndPrc <= prc) StepsFire = 3;
+                    string descr = $"-{zn}" + ((StepsFire == 3) ? $"  *{StepsFire}" : "");
+                    infoPanel.AddStepInfo(RndColorsControl.GetColor(7), descr);
                 }
                 TmpImmunity &= 0x01;
                 break;

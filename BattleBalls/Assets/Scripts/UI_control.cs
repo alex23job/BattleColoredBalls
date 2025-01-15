@@ -15,7 +15,10 @@ public class UI_control : MonoBehaviour
     [SerializeField] private Image crossBotRight;
     [SerializeField] private Image playerHP;
     [SerializeField] private Image botHP;
-    
+
+    [SerializeField] private Text txtScorePlayer;
+    [SerializeField] private Text txtScoreBot;
+
     [SerializeField] private Text txtPlName;
     [SerializeField] private Text txtBotName;
     [SerializeField] private Text txtPlHp;
@@ -36,12 +39,24 @@ public class UI_control : MonoBehaviour
     {
         int i;
         for (i = 0; i < 8; i++) arImgImmunity[i].sprite = sprNo;
+        ViewScore(1, 0); ViewScore(2, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    /// <summary>
+    /// Отображение числа удалённых кружков игроком и ботом
+    /// </summary>
+    /// <param name="mode">Для кого отображаем : 1 - player, 2 - bot</param>
+    /// <param name="zn">число кружков</param>
+    public void ViewScore(int mode, int zn)
+    {
+        if (mode == 1) txtScorePlayer.text = zn.ToString();
+        if (mode == 2) txtScoreBot.text = zn.ToString();
     }
 
     public void ViewBalls(int mode, Color col)

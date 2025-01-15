@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class RndColorsControl : MonoBehaviour
 {
+    static public Color GetColor(int n)
+    {
+        if (n >= 0 && n < 8) return arCols[n];
+        else return Color.white;
+    }
+
     [SerializeField] private GameObject ball;
     [SerializeField] private float force = 15f;
 
     [SerializeField] private LevelControl lc;
 
-    Color[] arCols = { Color.red, Color.green, Color.yellow, Color.blue, Color.cyan, Color.magenta, new Color(0.6f, 0.4f, 0.1f), new Color(1f, 0.6f, 0.2f) };
+    static Color[] arCols = { Color.red, Color.green, Color.yellow, Color.blue, Color.cyan, Color.magenta, new Color(0.6f, 0.4f, 0.1f), new Color(1f, 0.6f, 0.2f) };
     int[] arNumCols = { 0, 6, 4, 2, 5, 3, 1, 7, 7, 2, 0, 5, 1, 4, 6, 3};
 
     private Rigidbody rigidbodyBall;
