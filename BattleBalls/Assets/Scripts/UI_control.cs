@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UI_control : MonoBehaviour
 {
@@ -34,6 +35,15 @@ public class UI_control : MonoBehaviour
     [SerializeField] private Sprite sprNo;
     [SerializeField] private Image[] arImgImmunity;
 
+    [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject lossPanel;
+    [SerializeField] private Text txtEnemyWin;
+    [SerializeField] private Text txtEnemyLoss;
+    [SerializeField] private Text txtRwd1Win;
+    [SerializeField] private Text txtRwd1Loss;
+    [SerializeField] private Text txtRwd2Win;
+    [SerializeField] private Text txtRwd2Loss;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +56,33 @@ public class UI_control : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene("MapScene");
+    }
+
+    public void ViewWin(string nameEnemy)
+    {
+        string sname = Language.Instance.CurrentLanguage == "ru" ? "Враг" : "Enemy";
+        txtEnemyWin.text = $"{sname} : {nameEnemy}";
+        string rwdScore = Language.Instance.CurrentLanguage == "ru" ? "Монеты" : "Coins";
+        string rwdExp = Language.Instance.CurrentLanguage == "ru" ? "Опыт" : "Experience";
+        txtRwd1Win.text = $"{rwdScore} : {GameManager.Instance.currentPlayer.currentScore}   {rwdExp} : {GameManager.Instance.currentPlayer.currentExp}";
+        txtRwd2Win.text = "";
+        winPanel.SetActive(true);
+    }
+
+    public void ViewLoss(string nameEnemy)
+    {
+        string sname = Language.Instance.CurrentLanguage == "ru" ? "Враг" : "Enemy";
+        txtEnemyLoss.text = $"{sname} : {nameEnemy}";
+        string rwdScore = Language.Instance.CurrentLanguage == "ru" ? "Монеты" : "Coins";
+        string rwdExp = Language.Instance.CurrentLanguage == "ru" ? "Опыт" : "Experience";
+        txtRwd1Loss.text = $"{rwdScore} : {GameManager.Instance.currentPlayer.currentScore}   {rwdExp} : {GameManager.Instance.currentPlayer.currentExp}";
+        txtRwd2Loss.text = "";
+        lossPanel.SetActive(true);
     }
 
     /// <summary>

@@ -37,6 +37,6 @@ public class MainMenu : MonoBehaviour
 
     public void ViewGold()
     {
-        txtGold.text = GameManager.Instance.currentPlayer.totalGold.ToString();
+        //txtGold.text = GameManager.Instance.currentPlayer.totalGold.ToString();
     }
 }

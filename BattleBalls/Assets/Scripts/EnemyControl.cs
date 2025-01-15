@@ -24,8 +24,10 @@ public class EnemyControl : MonoBehaviour, IWarior
     private int levelHealing;
     private int levelCian;
     private int levelBrown;
-     public int MaxHP { get => maxHP; set { maxHP = (value >= 0) ? value : 0; } }
+    public int MaxHP { get => maxHP; set { maxHP = (value >= 0) ? value : 0; } }
     public int CurrentHP { get => currentHP; }
+
+    public string BotName { get { return Language.Instance.CurrentLanguage == "ru" ? nameRu : nameEn; } }
 
     public int ToxinPercent { get => toxinPercent; }
     public int FirePercent { get => firePercent; }
@@ -89,13 +91,14 @@ public class EnemyControl : MonoBehaviour, IWarior
         levelSpell = wp.lvlSpell;
         currentHP = maxHP;
         ui_Control.ViewName(nameRu, 2);
+        ui_Control.ViewHp(CurrentHP, MaxHP, 2);
     }
 
     public void BallsEffect(int zn, int col, int prc, out int znDmg)
     {
         currentScore += zn;
         ui_Control.ViewScore(2, currentScore);
-        int rndPrc = Random.Range(0, 101);
+        //int rndPrc = Random.Range(0, 101);
         int dmg = zn;
         znDmg = zn;
         switch(col)
@@ -108,7 +111,7 @@ public class EnemyControl : MonoBehaviour, IWarior
             case 1: //  зелёный
                     if ((Tmp2x & 0x04) != 0)
                     {
-                        znDmg *= 2;Tmp2x &= 0x04;
+                        znDmg *= 2;Tmp2x ^= 0x04;
                     }
                 /*if (immunity != 2)
                 {
@@ -182,7 +185,7 @@ public class EnemyControl : MonoBehaviour, IWarior
                 {
                     ChangeHP(-zn);
                     if (rndPrc <= prc) StepsToxin = 3;
-                    StepsToxin = 3; //  proba
+                    //StepsToxin = 3; //  proba
                     string descr = $"-{zn}" + ((StepsToxin == 3) ? $"  *{StepsToxin}" : "");
                     infoPanel.AddStepInfo(RndColorsControl.GetColor(1), descr);
                 }
@@ -234,7 +237,7 @@ public class EnemyControl : MonoBehaviour, IWarior
                     string descr = $"-{zn}" + ((StepsFire == 3) ? $"  *{StepsFire}" : "");
                     infoPanel.AddStepInfo(RndColorsControl.GetColor(7), descr);
                 }
-                TmpImmunity &= 0x01;
+                TmpImmunity &= 0x05;
                 break;
         }
     }

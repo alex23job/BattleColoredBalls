@@ -200,10 +200,12 @@ public class GameManager : MonoBehaviour
 
 public class PlayerInfo
 {
-    public int totalScore = 0;
-    public int currentScore = 0;
+    public int totalScore = 0;  //  exp
+    public int currentExp = 0;
+
     public int currentMode = 0;
     public int totalGold = 0;
+    public int currentScore = 0;
 
     public int currentLevel = 1;
     public int maxLevel = 1;
@@ -284,7 +286,14 @@ public class PlayerInfo
         {
             maxLevel = currentLevel;
         }
-        totalScore += currentScore;
+        totalScore += currentExp;
+        totalGold += currentScore;
+    }
+
+    public void LevelLoss()
+    {
+        totalScore += currentExp;
+        totalGold += currentScore;
     }
 
     /*    public void UpdateReward(int numLevel)
@@ -311,6 +320,7 @@ public class PlayerInfo
     public void ClearCurrentParam()
     {
         currentScore = 0;
+        currentExp = 0;
         /*currentGold = 0;
         currentHP = maxHP;
         currentMagic = 0;

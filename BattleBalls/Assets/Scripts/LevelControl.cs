@@ -120,12 +120,16 @@ public class LevelControl : MonoBehaviour
 
     public void PlayerKilled()
     {
-
+        GameManager.Instance.currentPlayer.LevelLoss();
+        GameManager.Instance.SaveGame();
+        ui_Control.ViewLoss(enemyControl.BotName);
     }
 
     public void BotKilled()
     {
         GameManager.Instance.currentPlayer.LevelComplete();
+        GameManager.Instance.SaveGame();
+        ui_Control.ViewWin(enemyControl.BotName);
     }
 
     private bool TestColorTails(int n, int c)

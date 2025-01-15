@@ -65,7 +65,7 @@ public class PlayerWarior : MonoBehaviour, IWarior
             case 1: //  зелёный
                     if ((Tmp2x & 0x04) != 0)
                     {
-                        znDmg *= 2; Tmp2x &= 0x04;
+                        znDmg *= 2; Tmp2x ^= 0x04;
                     }
                 /*if (immunity != 2)
                 {
@@ -113,6 +113,7 @@ public class PlayerWarior : MonoBehaviour, IWarior
                 }
                 break;
         }
+        GameManager.Instance.currentPlayer.currentExp += (col != 5) ? znDmg : dmg;
     }
 
     public void ChangeHP(int zn)
@@ -142,7 +143,7 @@ public class PlayerWarior : MonoBehaviour, IWarior
 
     public void SetPlayerInfo()
     {
-        maxHP = 100 + GameManager.Instance.currentPlayer.countRed / 100;
+        maxHP = 50 + GameManager.Instance.currentPlayer.countRed / 100;
         currentHP = maxHP;
 
         toxinPercent = GameManager.Instance.currentPlayer.countGreen / 50;
