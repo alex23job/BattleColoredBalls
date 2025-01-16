@@ -22,6 +22,7 @@ public class RndColorsControl : MonoBehaviour
     private float timer = 0.5f;
     private bool isRnd = false;
     private Vector3 oldPos;
+    int clkTimer = 0;
 
     private void Awake()
     {
@@ -46,6 +47,17 @@ public class RndColorsControl : MonoBehaviour
                 if ((oldPos != ball.transform.position) && (ball.transform.position.y > 1.4f))
                 {
                     oldPos = ball.transform.position;
+                    clkTimer++;
+                    if (clkTimer == 12)
+                    {
+                        clkTimer = 0;
+                        int xx = Random.Range(0, 2);
+                        int zz = Random.Range(0, 2);
+                        int degX = 5, degZ = 5;
+                        if (xx == 1) degX = -5;
+                        if (zz == 1) degZ = -5;
+                        transform.rotation = Quaternion.Euler(degX, 0, degZ);
+                    }
                 }
                 else
                 {   //  шарик остановился - определяем где

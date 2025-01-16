@@ -100,8 +100,7 @@ public class GameManager : MonoBehaviour
             {
                 mm_control.InterableLevelButtons(GameManager.Instance.currentPlayer.maxLevel);
                 mm_control.ViewGold();
-                //mm_control.OnPoleSelect(GameManager.Instance.currentPlayer.currentPole);
-                //mm_control.OnModeSelect(GameManager.Instance.currentPlayer.currentMode);
+                mm_control.ViewColors();
 
                 //mm_control.ViewScore();
                 //mm_control.UpdateAudioSource();
@@ -138,13 +137,13 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Game data loaded! Score=" + GameManager.Instance.currentPlayer.totalScore.ToString() + "  Gold=" + GameManager.Instance.currentPlayer.totalGold.ToString());
         Debug.Log($"Game data loaded! Score={GameManager.Instance.currentPlayer.totalScore}  MaxLevel={GameManager.Instance.currentPlayer.maxLevel}   Mode={GameManager.Instance.currentPlayer.currentMode}");
 
+        GameManager.Instance.currentPlayer.isLoad = true;
+
         if (mm_control != null)
         {
             mm_control.InterableLevelButtons(GameManager.Instance.currentPlayer.maxLevel);
             mm_control.ViewGold();
-            //mm_control.OnPoleSelect(GameManager.Instance.currentPlayer.currentPole);
-            //mm_control.OnModeSelect(GameManager.Instance.currentPlayer.currentMode);
-            //mm_control.ViewScore();
+            mm_control.ViewColors();
 
             //mm_control.ViewScore();
             //mm_control.UpdateAudioSource();
@@ -200,6 +199,9 @@ public class GameManager : MonoBehaviour
 
 public class PlayerInfo
 {
+    public bool isLoad = false;
+    public bool isAvatar = false;
+
     public int totalScore = 0;  //  exp
     public int currentExp = 0;
 

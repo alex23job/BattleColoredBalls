@@ -34,11 +34,13 @@ public class LevelControl : MonoBehaviour
     private int[] cntColBalls;
 
     private Vector3 rndPosL, rndPosR;
+
+    public bool isClick = true;
     // Start is called before the first frame update
     void Start()
     {
-        rndPosL = new Vector3(-6.5f, 1, -4);
-        rndPosR = new Vector3(6.5f, 1, -4);
+        rndPosL = new Vector3(-6.5f, 1.5f, -4f);
+        rndPosR = new Vector3(6.5f, 1.5f, -4f);
         GeneratePole();
         GetNextStep();
         int numWarior = GameManager.Instance.currentPlayer.currentLevel;
@@ -184,7 +186,13 @@ public class LevelControl : MonoBehaviour
         }
         if (modeSteps == 2)
         {   //  разрешить игроку кликать по шарам
-
+            isClick = true;
+            //print("Set isClick = true");
+        }
+        else
+        {
+            isClick = false;
+            //print("Set isClick = false");
         }
     }
 
@@ -278,6 +286,8 @@ public class LevelControl : MonoBehaviour
 
     public void TranslatePosition(Vector3 pos)
     {
+        //if (modeSteps < 2) return;  //  ?
+        print($"isClick = {isClick}");
         int x = Mathf.RoundToInt(pos.x + 3.5f);
         int y = Mathf.RoundToInt(pos.z + 3.5f);
         int num = 8 * y + x;
@@ -374,11 +384,11 @@ public class LevelControl : MonoBehaviour
                 //new WaitForSecondsRealtime(1f);
             }
             StringBuilder sb = new StringBuilder();
-            for (int k = 0; k < 8; k++)
+            /*for (int k = 0; k < 8; k++)
             {
                 sb.Append($"< {pole64[8 * k]} {pole64[8 * k + 1]} {pole64[8 * k + 2]} {pole64[8 * k + 3]} {pole64[8 * k + 4]} {pole64[8 * k + 5]} {pole64[8 * k + 6]} {pole64[8 * k + 7]} > ");
             }
-            print(sb.ToString());
+            print(sb.ToString());*/
         } while (ar.Count > 0);
         MoveTiles();
         //Invoke("MoveTiles", 0.7f);
@@ -508,7 +518,7 @@ public class LevelControl : MonoBehaviour
                 }
             }
         }
-        print($"cntColBalls => {cntColBalls[0]} {cntColBalls[1]} {cntColBalls[2]} {cntColBalls[3]} {cntColBalls[4]} {cntColBalls[5]} {cntColBalls[6]} {cntColBalls[7]}");
+        //print($"cntColBalls => {cntColBalls[0]} {cntColBalls[1]} {cntColBalls[2]} {cntColBalls[3]} {cntColBalls[4]} {cntColBalls[5]} {cntColBalls[6]} {cntColBalls[7]}");
         warior.StepsEffect();
         player.StepsEffect();
         cntColBalls = null;
@@ -624,7 +634,7 @@ public class LevelControl : MonoBehaviour
     {
         List<int> ar = new List<int>();
         int x = num % 8, y = num / 8, nc = pole64[num];
-        print($"TestTiles3 num={num} x={x} y={y} col={nc}");
+        //print($"TestTiles3 num={num} x={x} y={y} col={nc}");
         if (nc == -1) return ar;
         if ((x > 0) && (pole64[num - 1] == nc))
         {   //  слева одноцвет
@@ -725,7 +735,7 @@ public class LevelControl : MonoBehaviour
             if (poleGO[ar[i]] != null) poleGO[ar[i]].GetComponent<TailControl>().DeletingTail();
             poleGO[ar[i]] = null;
         }
-        print($"DelTiles   ar => {sb.ToString()}");
+        //print($"DelTiles   ar => {sb.ToString()}");
         //ar.Clear();
     }
 
@@ -759,7 +769,7 @@ public class LevelControl : MonoBehaviour
             if (pole64[i] == -1)
             {
                 GenerateTail(i, true);
-                print($"generate {i} => {pole64[i]} {poleGO[i].GetComponent<TailControl>().NumCol}");
+                //print($"generate {i} => {pole64[i]} {poleGO[i].GetComponent<TailControl>().NumCol}");
             }
         }
     }

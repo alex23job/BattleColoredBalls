@@ -145,6 +145,7 @@ public class PlayerWarior : MonoBehaviour, IWarior
     {
         maxHP = 50 + GameManager.Instance.currentPlayer.countRed / 100;
         currentHP = maxHP;
+        ui_Control.ViewHp(CurrentHP, MaxHP, 1);
 
         toxinPercent = GameManager.Instance.currentPlayer.countGreen / 50;
         if (toxinPercent > 100) toxinPercent = 100;

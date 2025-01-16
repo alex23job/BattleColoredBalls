@@ -39,20 +39,20 @@ public class RayTarget : MonoBehaviour
                 {
                     if (level != null)
                     {
-                        level.TranslatePosition(hit.point);
+                        if (level.isClick) level.TranslatePosition(hit.point);
                     }
                     //StartCoroutine(SphereIndicator(hit.point));
                     return;
                 }
-                if (hit.collider.gameObject.CompareTag("tile"))
+                /*if (hit.collider.gameObject.CompareTag("tile"))
                 {
                     if (level != null)
                     {
                         level.SelectTile(hit.collider.gameObject);
                     }
                     //StartCoroutine(SphereIndicator(hit.point));
-                }
-                if (hit.collider.gameObject.CompareTag("target"))
+                }*/
+                /*if (hit.collider.gameObject.CompareTag("target"))
                 {
                     if (level != null)
                     {
@@ -61,8 +61,7 @@ public class RayTarget : MonoBehaviour
                         if (pos.x > 4f) pos.y += 1.9f;
                         level.TileMove(pos);
                     }
-                    //StartCoroutine(SphereIndicator(hit.point));
-                }
+                }*/
 
                 //if (filter)
                 //{

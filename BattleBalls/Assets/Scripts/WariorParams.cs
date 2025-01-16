@@ -38,7 +38,7 @@ namespace Assets.Scripts
         }
 
         public static WariorParams[] arrWariorParams = {
-            new WariorParams("Враг1", "Warior1", 50, 0, 1, 1, 1, 1, 1, 1, 1),
+            new WariorParams("Враг1", "Warior1", 5, 0, 1, 1, 1, 1, 1, 1, 1),
             new WariorParams("Враг2", "Warior2", 100, 3, 50, 30, 2, 2, 2, 2, 2),
             new WariorParams("Враг3", "Warior3", 200, 1, 80, 60, 3, 3, 3, 3, 3)
         };

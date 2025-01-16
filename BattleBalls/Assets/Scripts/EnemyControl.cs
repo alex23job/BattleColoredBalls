@@ -66,8 +66,8 @@ public class EnemyControl : MonoBehaviour, IWarior
     // Start is called before the first frame update
     void Start()
     {
-        currentHP = 100;
-        maxHP = 100;
+        currentHP = 10;
+        maxHP = 10;
     }
 
     // Update is called once per frame
