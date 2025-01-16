@@ -67,7 +67,8 @@ public class MainMenu : MonoBehaviour
         string sB = lang == "ru" ? "Урон магией" : "Magic damage";
         string sDmg = "1x";
         int blue = GameManager.Instance.currentPlayer.countBlue;
-        if (blue >= 5000) sDmg = $"{(50 + red / 100) / 4}"; else if (blue >= 2000) sDmg = $"{(50 + red / 100) / 10}";
+        if (blue >= 2000) sDmg = $"; {(50 + red / 100) / 10}";
+        if (blue >= 5000) sDmg = $"; {(50 + red / 100) / 4}";
         colorItems[3].transform.GetChild(1).GetComponent<Text>().text = $"{blue}  {sB} {sDmg}";
 
         string sC = lang == "ru" ? "Защита от магии 1 ход" : "Magic Protection 1 turn";
@@ -82,7 +83,8 @@ public class MainMenu : MonoBehaviour
         string sM = lang == "ru" ? "Исцеление" : "Healing";
         sDmg = "1x";
         int magenta = GameManager.Instance.currentPlayer.countMagenta;
-        if (magenta >= 5000) sDmg = $"{(50 + red / 100) / 4}"; else if (magenta >= 2000) sDmg = $"{(50 + red / 100) / 10}";
+        if (magenta >= 2000) sDmg = $"; {(50 + red / 100) / 10}";
+        if (magenta >= 5000) sDmg = $"; {(50 + red / 100) / 4}";
         colorItems[5].transform.GetChild(1).GetComponent<Text>().text = $"{magenta}  {sM} {sDmg}";
 
         string sBr = lang == "ru" ? "Защита от огня 1 ход" : "Fire Protection 1 turn";
