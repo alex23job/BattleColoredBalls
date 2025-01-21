@@ -169,6 +169,8 @@ public class PlayerWarior : MonoBehaviour, IWarior
 
         ui_Control.ViewBonus(GameManager.Instance.currentPlayer.countBonusLine, 1);
         ui_Control.ViewBonus(GameManager.Instance.currentPlayer.countBonusRect, 2);
+
+        immunity = GameManager.Instance.currentPlayer.immunity;
     }
 
     public void BallsDamage(int zn, int col, int prc)

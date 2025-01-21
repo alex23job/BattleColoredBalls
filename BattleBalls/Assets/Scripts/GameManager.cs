@@ -224,6 +224,8 @@ public class PlayerInfo
     public int countBonusLine = 0;
     public int countBonusRect = 0;
 
+    public int immunity = 0; // 1 - heart, 2 - toxin, 3 - magic, 4 - fire
+
 
     /*public int currentPole = 0;
 
