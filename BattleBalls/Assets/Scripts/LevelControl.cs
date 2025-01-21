@@ -26,6 +26,15 @@ public class LevelControl : MonoBehaviour
     [SerializeField] private BallsEffect magicEffect;
     [SerializeField] private BallsEffect fireEffect;
 
+    /// <summary>
+    /// Отображение используемого бонуса: 1 - Vert, 2 - Hor, 3 - Rect
+    /// </summary>
+    private int bonusMode = 0;
+    /// <summary>
+    /// Номер линии ( вертикальной или горизонтальной 0 - 7 ) или квадрата ( 0 - 3 )
+    /// в зависимости от выбранного бонуса
+    /// </summary>
+    private int numLineOrRect = -1;
     private int modeSteps = 0;
     private int[] pole64;
     private GameObject[] poleGO;
@@ -63,7 +72,53 @@ public class LevelControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (bonusMode > 0)
+        {
+            if (Input.GetMouseButtonUp(0) && numLineOrRect != -1)
+            {
+                DeletingBonusTails();
+                bonusMode = 0;
+            }
+        }
+    }
 
+    private void DeletingBonusTails()
+    {
+        List<int> ar = new List<int>();
+        cntColBalls = new int[8];
+        int i;
+        if (bonusMode == 1)
+        {
+            for (i = numLineOrRect; i < 64; i += 8) ar.Add(i);
+            GameManager.Instance.currentPlayer.countBonusLine = 0;
+            ui_Control.ViewBonus(0, 1);
+        }
+        if (bonusMode == 2)
+        {
+            for (i = 0; i < 8; i++) ar.Add(i + 8 * numLineOrRect);
+            GameManager.Instance.currentPlayer.countBonusLine = 0;
+            ui_Control.ViewBonus(0, 1);
+        }
+        if (bonusMode == 3)
+        {
+            bool sel;
+            for (i = 0; i < 64; i++)
+            {
+                sel = false;
+                if (((i % 8) < 4) && ((i / 8) < 4) && (numLineOrRect == 0)) sel = true;
+                if (((i % 8) < 4) && ((i / 8) >= 4) && (numLineOrRect == 2)) sel = true;
+                if (((i % 8) >= 4) && ((i / 8) < 4) && (numLineOrRect == 1)) sel = true;
+                if (((i % 8) >= 4) && ((i / 8) >= 4) && (numLineOrRect == 3)) sel = true;
+                if (sel) ar.Add(i);
+            }
+            GameManager.Instance.currentPlayer.countBonusRect = 0;
+            ui_Control.ViewBonus(0, 2);
+        }
+        DelTiles(ar);
+        DownTiles();
+        CikleTest();
+        numLineOrRect = -1;
+        boardControl.SetIsOver(false);
     }
 
     private void GeneratePole()
@@ -803,21 +858,61 @@ public class LevelControl : MonoBehaviour
     public void BoardOverPoint(int x, int y)
     {
         print($"BoardOverPoint x=>{x} y=>{y}");
+        OffAllTile();numLineOrRect = -1;
+        int i;
+        if (bonusMode == 1)
+        {
+            for (i = 0; i < 64; i++)
+            {
+                poleGO[i].GetComponent<TailControl>().SetHint((i % 8) == x);
+            }
+            numLineOrRect = x;
+        }
+        if (bonusMode == 2)
+        {
+            for (i = 0; i < 64; i++)
+            {
+                poleGO[i].GetComponent<TailControl>().SetHint((i / 8) == y);
+            }
+            numLineOrRect = y;
+        }
+        if (bonusMode == 3)
+        {
+            bool sel;
+            int tail = 0;
+            if ((x < 4) && (y < 4)) tail = 0;
+            if ((x < 4) && (y >= 4)) tail = 2;
+            if ((x >= 4) && (y < 4)) tail = 1;
+            if ((x >= 4) && (y >= 4)) tail = 3;
+            numLineOrRect = tail;
+            for (i = 0; i < 64; i++)
+            {
+                sel = false;
+                if (((i % 8) < 4) && ((i / 8) < 4) && (tail == 0)) sel = true;
+                if (((i % 8) < 4) && ((i / 8) >= 4) && (tail == 2)) sel = true;
+                if (((i % 8) >= 4) && ((i / 8) < 4) && (tail == 1)) sel = true;
+                if (((i % 8) >= 4) && ((i / 8) >= 4) && (tail == 3)) sel = true;
+                poleGO[i].GetComponent<TailControl>().SetHint(sel);
+            }
+        }
     }
 
     public void OnClickLineV()
     {
         boardControl.SetIsOver(true);
+        bonusMode = 2;
     }
 
     public void OnClickLineH()
     {
         boardControl.SetIsOver(true);
+        bonusMode = 1;
     }
 
     public void OnClickRect()
     {
         boardControl.SetIsOver(true);
+        bonusMode = 3;
     }
 }
 
