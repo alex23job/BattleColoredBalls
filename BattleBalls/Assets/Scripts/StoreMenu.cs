@@ -61,6 +61,8 @@ public class StoreMenu : MonoBehaviour
             notPanel.SetActive(true);
             return;
         }
+        GameManager.Instance.currentPlayer.totalGold -= 500;
+        ViewGold();
         RewardedComplete(n);
         InteractableBonusBTN(false, n);
     }
@@ -73,11 +75,13 @@ public class StoreMenu : MonoBehaviour
 
     public void OnClickImmunCash(int n)
     {
-        if (GameManager.Instance.currentPlayer.totalGold < 500)
+        if (GameManager.Instance.currentPlayer.totalGold < 1000)
         {
             notPanel.SetActive(true);
             return;
         }
+        GameManager.Instance.currentPlayer.totalGold -= 1000;
+        ViewGold();
         RewardedComplete(n);
         InteractableImmunBTN(false);
     }
@@ -117,6 +121,7 @@ public class StoreMenu : MonoBehaviour
                 ViewImmunity();
                 break;
         }
+        GameManager.Instance.SaveGame();
     }
 
     private void InteractableBonusBTN(bool zn_set, int mode = 0)

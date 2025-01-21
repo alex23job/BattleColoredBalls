@@ -10,6 +10,7 @@ public class LevelControl : MonoBehaviour
     [SerializeField] private GameObject infoPanelBot;
     [SerializeField] private RndColorsControl rndColors;
     [SerializeField] private UI_control ui_Control;
+    [SerializeField] private BoardControl boardControl;
 
     [SerializeField] private Material[] arMats;
     [SerializeField] private GameObject tailPrefab;
@@ -56,6 +57,7 @@ public class LevelControl : MonoBehaviour
             case 4: ui_Control.ViewImm(true, 7); break;
         }
         ui_Control.ViewName(GameManager.Instance.currentPlayer.playerName, 1);
+        player.SetPlayerInfo();
     }
 
     // Update is called once per frame
@@ -122,6 +124,7 @@ public class LevelControl : MonoBehaviour
 
     public void PlayerKilled()
     {
+        GameManager.Instance.currentPlayer.immunity = 0;
         GameManager.Instance.currentPlayer.LevelLoss();
         GameManager.Instance.SaveGame();
         ui_Control.ViewLoss(enemyControl.BotName);
@@ -129,6 +132,7 @@ public class LevelControl : MonoBehaviour
 
     public void BotKilled()
     {
+        GameManager.Instance.currentPlayer.immunity = 0;
         GameManager.Instance.currentPlayer.LevelComplete();
         GameManager.Instance.SaveGame();
         ui_Control.ViewWin(enemyControl.BotName);
@@ -794,6 +798,26 @@ public class LevelControl : MonoBehaviour
     public void TileMove(Vector3 pos)
     {
 
+    }
+
+    public void BoardOverPoint(int x, int y)
+    {
+        print($"BoardOverPoint x=>{x} y=>{y}");
+    }
+
+    public void OnClickLineV()
+    {
+        boardControl.SetIsOver(true);
+    }
+
+    public void OnClickLineH()
+    {
+        boardControl.SetIsOver(true);
+    }
+
+    public void OnClickRect()
+    {
+        boardControl.SetIsOver(true);
     }
 }
 

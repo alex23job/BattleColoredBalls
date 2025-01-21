@@ -44,11 +44,15 @@ public class UI_control : MonoBehaviour
     [SerializeField] private Text txtRwd2Win;
     [SerializeField] private Text txtRwd2Loss;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         int i;
         for (i = 0; i < 8; i++) arImgImmunity[i].sprite = sprNo;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         ViewScore(1, 0); ViewScore(2, 0);
     }
 
@@ -213,6 +217,7 @@ public class UI_control : MonoBehaviour
     /// <param name="mode">Отчего у кого: Pl 0 - r, 1 - g, 2 - b, 3 - or, Bot 4 - r, 5 - g, 6 - b, 7 - or</param>
     public void ViewImm(bool zn, int mode)
     {
+        //print($"zn => {zn}     mode => {mode}");
         if ((mode >= 0) && (mode < 8)) arImgImmunity[mode].sprite = (zn == true) ? sprYes : sprNo;
     }
 }

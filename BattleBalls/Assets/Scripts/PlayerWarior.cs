@@ -132,7 +132,7 @@ public class PlayerWarior : MonoBehaviour, IWarior
     // Start is called before the first frame update
     void Start()
     {
-        SetPlayerInfo();
+        //SetPlayerInfo();
     }
 
     // Update is called once per frame
@@ -171,6 +171,8 @@ public class PlayerWarior : MonoBehaviour, IWarior
         ui_Control.ViewBonus(GameManager.Instance.currentPlayer.countBonusRect, 2);
 
         immunity = GameManager.Instance.currentPlayer.immunity;
+        //print($"immunity => {immunity}");
+        if (immunity > 0) ui_Control.ViewImm(true, immunity - 1);
     }
 
     public void BallsDamage(int zn, int col, int prc)
