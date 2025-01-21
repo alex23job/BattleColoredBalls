@@ -12,10 +12,16 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject[] recordItems;
 
     [SerializeField] private Text txtGold;
+    [SerializeField] private Text txtExp;
+
     // Start is called before the first frame update
     void Start()
     {
-        if (GameManager.Instance.currentPlayer.isLoad == true) ViewColors();
+        if (GameManager.Instance.currentPlayer.isLoad == true)
+        {
+            ViewGoldExp();
+            ViewColors();
+        }
         if (GameManager.Instance.currentPlayer.isAvatar == true)
         {
             //ViewColors();
@@ -42,9 +48,10 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    public void ViewGold()
+    public void ViewGoldExp()
     {
-        //txtGold.text = GameManager.Instance.currentPlayer.totalGold.ToString();
+        txtGold.text = GameManager.Instance.currentPlayer.totalGold.ToString();
+        txtExp.text = GameManager.Instance.currentPlayer.totalScore.ToString();
     }
 
     public void ViewColors()

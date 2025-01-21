@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
             if (mm_control != null)
             {
                 mm_control.InterableLevelButtons(GameManager.Instance.currentPlayer.maxLevel);
-                mm_control.ViewGold();
+                mm_control.ViewGoldExp();
                 mm_control.ViewColors();
 
                 //mm_control.ViewScore();
@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
         if (mm_control != null)
         {
             mm_control.InterableLevelButtons(GameManager.Instance.currentPlayer.maxLevel);
-            mm_control.ViewGold();
+            mm_control.ViewGoldExp();
             mm_control.ViewColors();
 
             //mm_control.ViewScore();
