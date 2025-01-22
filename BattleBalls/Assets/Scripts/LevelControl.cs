@@ -116,9 +116,13 @@ public class LevelControl : MonoBehaviour
         }
         DelTiles(ar);
         DownTiles();
+        UseBalls();
         CikleTest();
         numLineOrRect = -1;
         boardControl.SetIsOver(false);
+        currentCol1 = -1; ui_Control.ViewCross(0, true);
+        currentCol2 = -1; ui_Control.ViewCross(1, true);
+        GetNextStep();
     }
 
     private void GeneratePole()

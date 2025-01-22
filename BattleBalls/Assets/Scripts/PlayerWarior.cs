@@ -91,9 +91,9 @@ public class PlayerWarior : MonoBehaviour, IWarior
                 //TmpImmunity &= 0x02;
                 break;
             case 4: //  бирюзовый (голубой)
-                TmpImmunity |= 1;
+                if (zn >= 3) TmpImmunity |= 1;
                 if ((levelCian == 2) && (zn == 4)) Tmp2x |= 0x02;
-                if (levelCian == 3) { BonusLine++; GameManager.Instance.currentPlayer.countBonusLine++; ui_Control.ViewBonus(BonusLine, 1); }
+                if ((levelCian == 3) && (zn >= 5)) { BonusLine++; GameManager.Instance.currentPlayer.countBonusLine++; ui_Control.ViewBonus(BonusLine, 1); }
                 break;
             case 5: //  магента - лечение
                 if (levelHealing == 2) dmg = maxHP / 10;
@@ -102,9 +102,9 @@ public class PlayerWarior : MonoBehaviour, IWarior
                 infoPanel.AddStepInfo(RndColorsControl.GetColor(5), $"+{dmg}");
                 break;
             case 6: //  коричневый
-                TmpImmunity |= 2;
+                if (zn >= 3) TmpImmunity |= 2;
                 if (levelBrown == 2 && zn == 4) Tmp2x |= 0x01;
-                if (levelBrown == 3) { BonusRect++; GameManager.Instance.currentPlayer.countBonusRect++; ui_Control.ViewBonus(BonusRect, 2); }
+                if (levelBrown == 3 && zn >= 5) { BonusRect++; GameManager.Instance.currentPlayer.countBonusRect++; ui_Control.ViewBonus(BonusRect, 2); }
                 break;
             case 7: //  оранжевый
                 if ((Tmp2x & 0x02) != 0)
