@@ -350,7 +350,7 @@ public class LevelControl : MonoBehaviour
     public void TranslatePosition(Vector3 pos)
     {
         //if (modeSteps < 2) return;  //  ?
-        print($"isClick = {isClick}");
+        //print($"isClick = {isClick}");
         int x = Mathf.RoundToInt(pos.x + 3.5f);
         int y = Mathf.RoundToInt(pos.z + 3.5f);
         int num = 8 * y + x;
@@ -446,8 +446,8 @@ public class LevelControl : MonoBehaviour
                 DownTiles();
                 //new WaitForSecondsRealtime(1f);
             }
-            StringBuilder sb = new StringBuilder();
-            /*for (int k = 0; k < 8; k++)
+            /*StringBuilder sb = new StringBuilder();
+            for (int k = 0; k < 8; k++)
             {
                 sb.Append($"< {pole64[8 * k]} {pole64[8 * k + 1]} {pole64[8 * k + 2]} {pole64[8 * k + 3]} {pole64[8 * k + 4]} {pole64[8 * k + 5]} {pole64[8 * k + 6]} {pole64[8 * k + 7]} > ");
             }
@@ -511,7 +511,7 @@ public class LevelControl : MonoBehaviour
                             warior.BallsEffect(cntColBalls[i], 6, 0, out dmg);
                             break;
                         case 7: //  оранжевый
-                            warior.BallsEffect(cntColBalls[i], 7, 0, out dmg);   //  proba
+                            warior.BallsEffect(cntColBalls[i], 7, 0, out dmg);
                             player.BallsDamage(dmg, 7, 0);
                             fireEffect.gameObject.SetActive(true); fireEffect.MoveToLeft(); Invoke("FireHide", 1f);
                             break;
@@ -520,11 +520,53 @@ public class LevelControl : MonoBehaviour
             }
             if (warior.BonusLine > 0)
             {   //  удалить случайную линию
-
+                List<int> ar = new List<int>();
+                cntColBalls = new int[8];
+                int i, numLineOrRect = Random.Range(0, 8);
+                bonusMode = 1 + Random.Range(0, 2);
+                if (bonusMode == 1)
+                {
+                    for (i = numLineOrRect; i < 64; i += 8) ar.Add(i);
+                }
+                if (bonusMode == 2)
+                {
+                    for (i = 0; i < 8; i++) ar.Add(i + 8 * numLineOrRect);
+                }
+                print($"Bot bonus line bonusMode => {bonusMode}    numLineOrRect => {numLineOrRect}");
+                bonusMode = 0;
+                warior.BonusLine = 0;
+                DelTiles(ar);
+                print($"bonus line cntColBalls => {cntColBalls[0]} {cntColBalls[1]} {cntColBalls[2]} {cntColBalls[3]} {cntColBalls[4]} {cntColBalls[5]} {cntColBalls[6]} {cntColBalls[7]}");
+                DownTiles();
+                warior.StepsEffect();
+                UseBalls();
+                print("bonus line CikleTest");
+                CikleTest();
             }
             if (warior.BonusRect > 0)
             {   //  удалить случайный квадрат 4х4
-
+                List<int> ar = new List<int>();
+                cntColBalls = new int[8];
+                bool sel;
+                int i, numLineOrRect = Random.Range(0, 4);
+                print($"Bot bonus rect numLineOrRect => {numLineOrRect}");
+                for (i = 0; i < 64; i++)
+                {
+                    sel = false;
+                    if (((i % 8) < 4) && ((i / 8) < 4) && (numLineOrRect == 0)) sel = true;
+                    if (((i % 8) < 4) && ((i / 8) >= 4) && (numLineOrRect == 2)) sel = true;
+                    if (((i % 8) >= 4) && ((i / 8) < 4) && (numLineOrRect == 1)) sel = true;
+                    if (((i % 8) >= 4) && ((i / 8) >= 4) && (numLineOrRect == 3)) sel = true;
+                    if (sel) ar.Add(i);
+                }
+                warior.BonusRect = 0;
+                DelTiles(ar);
+                print($"bonus rect cntColBalls => {cntColBalls[0]} {cntColBalls[1]} {cntColBalls[2]} {cntColBalls[3]} {cntColBalls[4]} {cntColBalls[5]} {cntColBalls[6]} {cntColBalls[7]}");
+                DownTiles();
+                warior.StepsEffect();
+                UseBalls();
+                print("bonus rect CikleTest");
+                CikleTest();
             }
         }
         if (modeSteps == 2)
