@@ -125,8 +125,13 @@ public class PlayerWarior : MonoBehaviour, IWarior
         ui_Control.ViewHp(CurrentHP, MaxHP, 1);
         if (currentHP == 0)
         {   //  игрок убит !!!
-            levelControl.PlayerKilled();
+            Invoke("PlayerKilled", 1f);            
         }
+    }
+
+    private void PlayerKilled()
+    {
+        levelControl.PlayerKilled();
     }
 
     // Start is called before the first frame update

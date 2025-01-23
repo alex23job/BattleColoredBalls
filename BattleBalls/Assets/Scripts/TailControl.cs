@@ -6,6 +6,7 @@ public class TailControl : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private GameObject selectCube;
+    [SerializeField] private GameObject remEffect;
 
     private int nCol;
     public int NumCol { get { return nCol; } }
@@ -100,7 +101,11 @@ public class TailControl : MonoBehaviour
 
     public void DeletingTail()
     {
+        Vector3 pos = transform.position;
+        pos.y += 0.5f;
+        GameObject rem = Instantiate(remEffect, pos, Quaternion.identity);
         Destroy(gameObject);
+        Destroy(rem, 0.5f);
     }
 
     public void SetHint(bool zn)

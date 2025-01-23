@@ -59,8 +59,13 @@ public class EnemyControl : MonoBehaviour, IWarior
         ui_Control.ViewHp(CurrentHP, MaxHP, 2);
         if (currentHP == 0)
         {   //  бот убит !!!
-            levelControl.BotKilled();
+            Invoke("BotKille", 1f);
         }
+    }
+
+    private void BotKilled()
+    {
+        levelControl.BotKilled();
     }
 
     // Start is called before the first frame update
