@@ -59,7 +59,7 @@ public class EnemyControl : MonoBehaviour, IWarior
         ui_Control.ViewHp(CurrentHP, MaxHP, 2);
         if (currentHP == 0)
         {   //  бот убит !!!
-            Invoke("BotKille", 1f);
+            Invoke("BotKilled", 0.5f);
         }
     }
 
